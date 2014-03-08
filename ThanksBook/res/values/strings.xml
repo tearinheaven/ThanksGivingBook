@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Thanks</string>
+	<string name="action_settings">Settings</string>
+	<string name="hello_world">Hello world!</string>
+	<string name="index_page">首页</string>
+	<string name="search">search</string>
+	<string name="add_thanks">add_thanks</string>
+	<string name="filter">filter</string>
+	<string name="to_index">首页-感恩簿</string>
+	<string name="to_setting">设置</string>
+	<string name="to_personal_profile">个人资料</string>
+	<string name="synchronize">同步</string>
+	<string name="sketch">草稿</string>
+    
+</resources>

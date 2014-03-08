@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dip"
+    android:layout_height="200dip"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/to_index"
+        android:padding="10dip"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        >
+        <ImageView
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:background="@drawable/home"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/to_index"
+            />"
+    </LinearLayout>"
+    
+    <LinearLayout
+        android:id="@+id/sketch"
+        android:padding="10dip"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        >
+        <ImageView
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:background="@drawable/sketch"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sketch"
+            />"
+    </LinearLayout>"
+    
+     <LinearLayout
+         android:padding="10dip"
+        android:id="@+id/personal_profile"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        >
+        <ImageView
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:background="@drawable/personal_profile"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/to_personal_profile"
+            />
+    </LinearLayout>
+   
+     <LinearLayout
+        android:id="@+id/setting"
+        android:padding="10dip"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        >
+        <ImageView
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:background="@drawable/setting"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/to_setting"
+            />
+    </LinearLayout>
+   
+</LinearLayout>
