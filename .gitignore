@@ -213,3 +213,6 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+ThanksBook/gen/com/zte/thanksbook/BuildConfig.java
+ThanksBook/gen/com/zte/thanksbook/R.java
+ThanksBook/project.properties
