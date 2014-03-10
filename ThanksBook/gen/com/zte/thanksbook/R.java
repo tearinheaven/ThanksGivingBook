@@ -34,7 +34,7 @@ public final class R {
         public static final int synchronize=0x7f02000a;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000c;
+        public static final int action_settings=0x7f08000d;
         public static final int content=0x7f080007;
         public static final int filter=0x7f080004;
         public static final int ima=0x7f080006;
@@ -43,6 +43,7 @@ public final class R {
         public static final int personal_profile=0x7f08000a;
         public static final int search=0x7f080003;
         public static final int setting=0x7f08000b;
+        public static final int shadow_text_view=0x7f08000c;
         public static final int sketch=0x7f080009;
         public static final int synchronize=0x7f080002;
         public static final int to_index=0x7f080008;

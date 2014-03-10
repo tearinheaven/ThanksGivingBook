@@ -1,4 +1,6 @@
-package com.zte.thanksbook;
+package com.zte.thanksbook.activities;
+
+import com.zte.thanksbook.R;
 
 import android.app.Activity;
 import android.app.Fragment;
