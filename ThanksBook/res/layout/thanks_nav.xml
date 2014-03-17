@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+	android:id="@+id/thanks_nav_layout" >
+    <Button
+        android:id="@+id/nav_shadow"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+    	android:background="#86222222" />
+    <TextView
+        android:id="@+id/nav_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:background="#fafafa"
+        android:text="aaaaaaaaa" />
+
+</FrameLayout>

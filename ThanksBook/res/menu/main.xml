@@ -1,9 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
-
+    <item android:id="@+id/action_reflash"
+          android:icon="@drawable/ic_reflash"
+          android:title="@string/action_reflash"
+          android:showAsAction="always" />
+    <item android:id="@+id/action_search"
+          android:icon="@drawable/ic_search"
+          android:title="@string/action_search"
+          android:showAsAction="always" />
+    <item android:id="@+id/action_filter"
+          android:icon="@drawable/ic_filter"
+          android:title="@string/action_filter"
+          android:showAsAction="always" />"
 </menu>

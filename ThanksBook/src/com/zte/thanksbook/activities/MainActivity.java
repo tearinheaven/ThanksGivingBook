@@ -1,78 +1,66 @@
 package com.zte.thanksbook.activities;
 
-import com.zte.thanksbook.R;
-
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-public class MainActivity extends Activity {
-    
-     private ImageButton slipButton;
-     private ImageButton indexButton;
-     private ImageView img;
-     
-     WindowManager manager;
-    
-    
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        this.getActionBar().hide();
-        
-        manager = (WindowManager)getSystemService(Context.WINDOW_SERVICE); 
-        
-        slipButton = (ImageButton)this.findViewById(R.id.main_slip);
-        indexButton = (ImageButton)this.findViewById(R.id.main_app);
-        //点击首页图标事件
-        slipButton.setOnClickListener(new OnClickListener(){
-               @Override
-               public void onClick(View arg0) {
-            	   /*WindowManager.LayoutParams lp = new WindowManager.LayoutParams(  
-            			   LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT,  
-            			   WindowManager.LayoutParams.TYPE_APPLICATION,  
-            			   WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE  
-            			   | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,  
-            			   PixelFormat.TRANSLUCENT);  
-            			     
-            			   lp.gravity = Gravity.BOTTOM;// 可以自定义显示的位置  
-            			   lp.y = 10;   
-            			   View mNightView = new TextView(MainActivity.this);  
-            			   mNightView.setBackgroundColor(0x80000000);  
-            			   manager.addView(mNightView, lp);*/
-            	   
-                    img = (ImageView)findViewById(R.id.ima);
-                    NavigationFragment navigation = new NavigationFragment();
-                    FragmentManager fragManager = getFragmentManager();
-                    FragmentTransaction tran = fragManager.beginTransaction();
-                    //tran.add(navigation, null);
-                    tran.replace(R.id.content, navigation);
-                    tran.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    //img.setBackgroundColor(Color.parseColor("#86222222"));
-                    tran.addToBackStack(null);
-                    tran.commit();
-               }
-        });
-    }
+import com.zte.thanksbook.R;
 
+public class MainActivity extends Activity implements OnClickListener {
+    private NavigationFragment navigation;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-   
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+
+		ActionBar actionBar = this.getActionBar();
+		actionBar.setCustomView(R.layout.actionbar_layout);
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		actionBar.setDisplayShowCustomEnabled(true);
+
+		this.findViewById(R.id.actionbar_logo).setOnClickListener(this);
+		this.findViewById(R.id.actionbar_menu_tip).setOnClickListener(this);
+
+		return true;
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		boolean isMenuShow = false;
+		if (this.navigation!=null)
+		{
+			isMenuShow = this.navigation.isMenuShow();
+		}
+		
+		if (isMenuShow) 
+		{
+			this.navigation.toggleMenu(this.findViewById(R.id.actionbar_menu_tip));
+		}
+		else
+		{			
+			navigation = new NavigationFragment();
+	        FragmentManager fragManager = getFragmentManager();
+	        FragmentTransaction tran = fragManager.beginTransaction();
+	        tran.replace(R.id.thanks_nav, navigation);
+	        tran.addToBackStack(null);
+	        tran.commit();
+			this.navigation.toggleMenu(this.findViewById(R.id.actionbar_menu_tip));
+		}
+		
+		return;
+	}
+
 }
