@@ -22,6 +22,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="com.zte.thanksbook.activities.NewTextMessageActivity"
+            android:label="hello" >
+        </activity>
+        <!--
+        <activity
+            android:name="com.zte.thanksbook.activities.NewVideoMessageActivity"
+            android:label="@string/title_activity_new_video_message" >
+        </activity>
+        -->
     </application>
 
 </manifest>
