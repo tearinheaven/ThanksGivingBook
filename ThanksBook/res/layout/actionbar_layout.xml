@@ -12,21 +12,12 @@
 
         <ImageButton
             android:id="@+id/actionbar_menu_tip"
-            android:layout_width="wrap_content"
+            android:layout_width="32dp"
             android:layout_height="fill_parent"
             android:layout_gravity="left|center_vertical"
             android:background="@android:color/transparent"
             android:clickable="true"
             android:src="@drawable/menu_tip" />
-
-        <ImageButton
-            android:id="@+id/actionbar_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_gravity="left|center_vertical"
-            android:background="@android:color/transparent"
-            android:clickable="true"
-            android:src="@drawable/logo" />
 
         <TextView
             android:id="@+id/actionbar_title"
@@ -35,9 +26,9 @@
             android:layout_gravity="left|center_vertical"
             android:layout_marginLeft="5dp"
             android:background="@android:color/transparent"
-            android:textSize="15sp"
-            android:text="首页"
-            android:textColor="#000" />
+            android:textSize="22sp"
+            android:text="@string/app_name"
+            android:textColor="#FFF" />
     </LinearLayout>
 
 </LinearLayout>

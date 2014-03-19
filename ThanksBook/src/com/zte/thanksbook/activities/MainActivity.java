@@ -17,16 +17,18 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main);		
 		MainBottomFragment bottomFragment = new MainBottomFragment();
 		FragmentManager fragManager = this.getFragmentManager();
 		FragmentTransaction fragTransaction = fragManager.beginTransaction();
 		fragTransaction.replace(R.id.main_bottom,bottomFragment);
 		fragTransaction.commit();
+
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 
 		ActionBar actionBar = this.getActionBar();
@@ -34,7 +36,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		actionBar.setDisplayShowCustomEnabled(true);
 
-		this.findViewById(R.id.actionbar_logo).setOnClickListener(this);
 		this.findViewById(R.id.actionbar_menu_tip).setOnClickListener(this);
 
 		return true;
@@ -42,6 +43,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		// TODO Auto-generated method stub
 		boolean isMenuShow = false;
 		if (this.navigation!=null)
 		{

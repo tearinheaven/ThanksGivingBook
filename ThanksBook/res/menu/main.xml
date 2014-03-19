@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item android:id="@+id/action_reflash"
-          android:icon="@drawable/ic_reflash"
+          android:icon="@drawable/ic_reflash" 
           android:title="@string/action_reflash"
           android:showAsAction="always" />
     <item android:id="@+id/action_search"
@@ -11,5 +11,5 @@
     <item android:id="@+id/action_filter"
           android:icon="@drawable/ic_filter"
           android:title="@string/action_filter"
-          android:showAsAction="always" />"
+          android:showAsAction="always" />
 </menu>
