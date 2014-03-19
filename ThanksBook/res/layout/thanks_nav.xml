@@ -8,11 +8,120 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
     	android:background="#86222222" />
-    <TextView
+    <LinearLayout
         android:id="@+id/nav_menu"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="fill_parent"
-        android:background="#fafafa"
-        android:text="aaaaaaaaa" />
+        android:orientation="vertical"
+		android:background="@color/navigation_background" >
+		<LinearLayout 
+	        android:id="@+id/nav_menu_home"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="8dp"
+	        android:orientation="horizontal"
+			android:background="@drawable/nav_item_bg">
+		    <ImageView 
+		        android:id="@+id/nav_img_home"
+		        android:layout_width="32dp"
+		        android:layout_height="32dp"
+		        android:src="@drawable/nav_img_home_bg" />
+		    <TextView
+		        android:id="@+id/nav_text_home"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+            	android:layout_gravity="left|center_vertical"
+            	android:layout_marginLeft="10dp"
+		        android:text="@string/nav_home_string"
+		        android:textColor="@drawable/nav_text_bg"
+		        android:textSize="15sp" />"
+		</LinearLayout>
+		<LinearLayout 
+	        android:id="@+id/nav_menu_draft"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="1dp"
+	        android:padding="8dp"
+	        android:orientation="horizontal"
+			android:background="@drawable/nav_item_bg">
+		    <ImageView 
+		        android:id="@+id/nav_img_draft"
+		        android:layout_width="32dp"
+		        android:layout_height="32dp"
+		        android:src="@drawable/nav_img_draft_bg" />
+		    <TextView
+		        android:id="@+id/nav_text_draft"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+            	android:layout_gravity="left|center_vertical"
+            	android:layout_marginLeft="10dp"
+		        android:text="@string/nav_draft_string"
+		        android:textColor="@drawable/nav_text_bg"
+		        android:textSize="15sp" />
+		</LinearLayout>
+		<LinearLayout 
+	        android:id="@+id/nav_menu_myinfo"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="1dp"
+	        android:padding="8dp"
+	        android:orientation="horizontal"
+			android:background="@drawable/nav_item_bg">
+		    <ImageView 
+		        android:id="@+id/nav_img_myinfo"
+		        android:layout_width="32dp"
+		        android:layout_height="32dp"
+		        android:src="@drawable/nav_img_myinfo_bg" />
+		    <TextView
+		        android:id="@+id/nav_text_myinfo"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+            	android:layout_gravity="left|center_vertical"
+            	android:layout_marginLeft="10dp"
+		        android:text="@string/nav_myinfo_string"
+		        android:textColor="@drawable/nav_text_bg"
+		        android:textSize="15sp" />
+		</LinearLayout>
+		<LinearLayout 
+	        android:id="@+id/nav_menu_setup"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="1dp"
+	        android:padding="8dp"
+	        android:orientation="horizontal"
+			android:background="@drawable/nav_item_bg">
+		    <ImageView 
+		        android:id="@+id/nav_img_setup"
+		        android:layout_width="32dp"
+		        android:layout_height="32dp"
+		        android:src="@drawable/nav_img_setup_bg" />
+		    <TextView
+		        android:id="@+id/nav_text_setup"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+            	android:layout_gravity="left|center_vertical"
+            	android:layout_marginLeft="10dp"
+		        android:text="@string/nav_setup_string"
+		        android:textColor="@drawable/nav_text_bg"
+		        android:textSize="15sp" />
+		</LinearLayout>
+		<RelativeLayout 
+	        android:id="@+id/nav_menu_last"
+	        android:layout_width="fill_parent"
+	        android:layout_height="match_parent"
+	        android:layout_marginTop="1dp"
+	        android:padding="8dp"
+			android:background="@drawable/nav_item_bg">
+		    <TextView
+		        android:id="@+id/nav_text_version"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+        		android:layout_alignParentBottom="true"
+        		android:layout_centerHorizontal="true"
+		        android:text="@string/nav_version_string"
+		        android:textColor="@drawable/nav_text_bg"
+		        android:textSize="11sp" />
+		</RelativeLayout>
+	</LinearLayout>
 
 </FrameLayout>

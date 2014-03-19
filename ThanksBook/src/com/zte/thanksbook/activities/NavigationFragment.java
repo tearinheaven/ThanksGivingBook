@@ -50,20 +50,50 @@ public class NavigationFragment extends Fragment implements AnimationListener {
 			}
 		});
 
+		//设置选中状态，待完善
+		v.findViewById(R.id.nav_menu_home).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				v.setSelected(true);
+				myActivity.findViewById(R.id.nav_menu_draft).setSelected(false);
+				myActivity.findViewById(R.id.nav_menu_myinfo).setSelected(false);
+				myActivity.findViewById(R.id.nav_menu_setup).setSelected(false);
+			}
+		});
+		v.findViewById(R.id.nav_menu_draft).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				v.setSelected(true);
+				myActivity.findViewById(R.id.nav_menu_home).setSelected(false);
+				myActivity.findViewById(R.id.nav_menu_myinfo).setSelected(false);
+				myActivity.findViewById(R.id.nav_menu_setup).setSelected(false);
+			}
+		});
+		v.findViewById(R.id.nav_menu_myinfo).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				v.setSelected(true);
+				myActivity.findViewById(R.id.nav_menu_home).setSelected(false);
+				myActivity.findViewById(R.id.nav_menu_draft).setSelected(false);
+				myActivity.findViewById(R.id.nav_menu_setup).setSelected(false);
+			}
+		});
+		v.findViewById(R.id.nav_menu_setup).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				v.setSelected(true);
+				myActivity.findViewById(R.id.nav_menu_home).setSelected(false);
+				myActivity.findViewById(R.id.nav_menu_draft).setSelected(false);
+				myActivity.findViewById(R.id.nav_menu_myinfo).setSelected(false);
+			}
+		});
+
 		return v;
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-
-		/*View v = this.getActivity().findViewById(R.id.nav_menu);
-		v.measure(0, 0);
-		Animation animation = new TranslateAnimation(0 - v.getMeasuredWidth()*3, 0, 0, 0);
-		animation.setFillAfter(true);
-		animation.setDuration(500);
-		v.startAnimation(animation);*/
-		//animation.setAnimationListener(this);		
 		
 		View v = this.getActivity().findViewById(R.id.nav_menu);
 		Animation anim = AnimationUtils.loadAnimation(this.getActivity(), R.anim.nav_slow_in_anim);
