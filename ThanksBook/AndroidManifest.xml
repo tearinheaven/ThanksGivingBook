@@ -25,7 +25,9 @@
         
         <activity
             android:name="com.zte.thanksbook.activities.NewTextMessageActivity"
-            android:label="hello" >
+            android:label="hello" 
+            android:windowSoftInputMode="adjustResize"
+            >
         </activity>
         <!--
         <activity

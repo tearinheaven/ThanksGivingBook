@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zte.thanksbook.R;
@@ -18,6 +19,7 @@ import com.zte.thanksbook.R;
 public class NewTextMessageActivity extends Activity implements OnClickListener {
 
 	private TextView dateText ;
+	private EditText thanksMsg;
     Calendar calendar = Calendar.getInstance(Locale. CHINA);
     
 	private OnDateSetListener dateListener = new OnDateSetListener()
@@ -43,6 +45,8 @@ public class NewTextMessageActivity extends Activity implements OnClickListener 
 		int day = calendar .get(Calendar.DAY_OF_MONTH);
 		dateText.setText(year+"-" +month+"-"+day);
 		dateText.setOnClickListener(this);
+		thanksMsg = (EditText)this.findViewById(R.id.msg_text);
+		thanksMsg.setFocusable(true);
 	}
 
 	@Override

@@ -1,19 +1,14 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
     tools:context=".NewTextMessageActivity" >
-
     <RelativeLayout
         android:id="@+id/new_top"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:layout_alignParentTop="true"
 		android:padding="20dp"
 		>
         <TextView
@@ -31,28 +26,35 @@
         android:text="因谁感动"
         />
     </RelativeLayout>
-    <EditText 
-        android:id="@+id/msg_text"
-        android:layout_width="fill_parent"
-        android:layout_height="250dp"
-        android:layout_below="@id/new_top"
-        android:hint="在这里记录生活中的小美好"
-        android:textSize="12dp"
-        />
+    <ScrollView 
+	    android:layout_height="fill_parent"
+	    android:layout_width="fill_parent"
+	    android:fillViewport="true"
+	    android:layout_weight="1"
+    	>
+	    <EditText 
+	        android:id="@+id/msg_text"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:hint="在这里记录生活中的小美好"
+	        android:textSize="12dp"
+	        android:imeOptions="flagNoExtractUi" 
+	        />
+   	</ScrollView>
     <LinearLayout 
         android:id="@+id/new_bottom"
         android:layout_height="wrap_content"
-        android:layout_below="@id/msg_text"
         android:layout_width="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:padding="10dp"
+        android:padding="6dp"
+        android:orientation="horizontal"
+        android:background="@color/navigation_background_s"
         >
         <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/camera"
-            android:layout_marginRight="20dip"
-            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dip"
+            android:layout_marginLeft="10dp"
             />
         <ImageButton 
             android:layout_width="wrap_content"
@@ -60,5 +62,4 @@
             android:background="@drawable/photo"
             />
     </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
