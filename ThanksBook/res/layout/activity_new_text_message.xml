@@ -50,13 +50,15 @@
         android:background="@color/navigation_background_s"
         >
         <ImageButton 
+            android:id="@+id/takePhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/camera"
             android:layout_marginRight="10dip"
             android:layout_marginLeft="10dp"
             />
-        <ImageButton 
+        <ImageButton
+            android:id="@+id/selectPicture" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/photo"
