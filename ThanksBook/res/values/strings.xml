@@ -6,10 +6,5 @@
     <string name="action_search">搜索</string>
     <string name="action_filter">过滤</string>
     <string name="hello_world">Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!Hello world!</string>
-    <string name="nav_home_string">首页</string>
-    <string name="nav_draft_string">草稿箱</string>
-    <string name="nav_myinfo_string">个人资料</string>
-    <string name="nav_setup_string">设置</string>
-    <string name="nav_version_string">感恩薄 V1.0</string>
 
 </resources>

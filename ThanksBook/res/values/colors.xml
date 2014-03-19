@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="navigation_background">#f3f3f3</color>
-    <color name="navigation_background_s">#21ceb1</color>
-    <color name="navigation_background_g">#FFFFFF</color>
-    <color name="nav_text_unselected">#CCCCCC</color>
-    <color name="nav_text_selected">#FFFFFF</color>
-</resources>
