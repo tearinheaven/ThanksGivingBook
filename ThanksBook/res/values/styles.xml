@@ -19,6 +19,7 @@
         parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">#29d9c2</item>
         <item name="@android:textSize">11sp</item>
+        <item name="android:displayOptions">showCustom</item><!-- 默认显示CustomView,防止启动时的闪烁 -->
     </style>
 
 </resources>

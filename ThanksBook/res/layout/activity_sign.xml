@@ -1,0 +1,91 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".SignActivity" >
+
+    <LinearLayout
+        android:id="@+id/sign_fileds"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/border_corner_w"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+            <TextView 
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+            	android:gravity="left|center_vertical"
+                android:text="@string/email_address"
+                android:textStyle="normal"
+                android:textSize="18sp"
+                android:textColor="#000"/>
+            <EditText 
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+            	android:gravity="left|center_vertical"
+            	android:singleLine="true"
+            	android:hint="@string/email_address_hint"
+            	android:textColor="#cccccc"
+            	android:background="@null"
+            	android:inputType="textEmailAddress"
+            	/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="0"
+            android:background="#e6e6e6"
+            android:orientation="vertical" >           
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+            <TextView 
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+            	android:gravity="left|center_vertical"
+                android:text="@string/user_password"
+                android:textStyle="normal"
+                android:textSize="18sp"
+                android:textColor="#000"/>
+            <EditText 
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+            	android:gravity="left|center_vertical"
+            	android:singleLine="true"
+            	android:hint="@string/user_password_hint"
+            	android:textColor="#cccccc"
+            	android:background="@null"
+            	android:inputType="textPassword"
+            	/>
+        </LinearLayout>
+
+    </LinearLayout>
+    
+    <Button 
+        android:layout_below="@id/sign_fileds"
+        android:layout_width="150dp"
+        android:layout_height="50dp" 
+        android:text="@string/title_activity_sign" 
+        android:layout_centerHorizontal="true"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/border_corner_b"/>
+
+</RelativeLayout>
