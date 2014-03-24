@@ -41,6 +41,14 @@
 	        android:imeOptions="flagNoExtractUi" 
 	        />
    	</ScrollView>
+   	<LinearLayout 
+   	    android:id="@+id/photoShow"
+   	    android:layout_width="fill_parent"
+   	    android:layout_height="wrap_content"
+   	    android:layout_marginLeft="5dp"
+   	    android:layout_marginRight="5dp"
+   	    >
+   	</LinearLayout>
     <LinearLayout 
         android:id="@+id/new_bottom"
         android:layout_height="wrap_content"

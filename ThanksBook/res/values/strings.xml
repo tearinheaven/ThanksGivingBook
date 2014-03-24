@@ -12,6 +12,11 @@
     <string name="nav_myinfo_string">个人资料</string>
     <string name="nav_setup_string">设置</string>
     <string name="nav_version_string">感恩薄 V1.0</string>
+    <string name="max_photo_allow_toast">您最多只能上传9张图片</string>
+    <string name="publish">发表</string>
+    <string name="new_thanks">新建感恩</string>
+    <string name="title_activity_boot_strap">BootStrapActivity</string>
+    <string name="title_activity_guide">GuideActivity</string>
     <string name="title_activity_sign">注册</string>
     <string name="email_address">邮箱</string>
     <string name="email_address_hint">请使用您的常用邮箱地址</string>

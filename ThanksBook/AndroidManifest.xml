@@ -13,6 +13,7 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -22,23 +23,36 @@
         <activity
             android:name="com.zte.thanksbook.activities.MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
         </activity>
         <activity
             android:name="com.zte.thanksbook.activities.NewTextMessageActivity"
-            android:label="hello"
+            android:icon="@drawable/logo"
+            android:label="@string/new_thanks"
+            android:parentActivityName="com.zte.thanksbook.activities.MainActivity"
             android:windowSoftInputMode="adjustResize" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.zte.thanksbook.activities.MainActivity" />
         </activity>
         <!--
         <activity
             android:name="com.zte.thanksbook.activities.NewVideoMessageActivity"
             android:label="@string/title_activity_new_video_message" >
-        </activity>
+        </activity>
         -->
+        <activity
+            android:name="com.zte.thanksbook.activities.BootStrapActivity"
+            android:label="@string/app_name" >
+			<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.zte.thanksbook.activities.GuideActivity"
+            android:label="@string/title_activity_guide" >
+        </activity>
         <activity
             android:name="com.zte.thanksbook.activities.SignActivity"
             android:label="@string/title_activity_sign"
@@ -46,6 +60,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.zte.thanksbook.activities.MainActivity" />
+
         </activity>
     </application>
 
