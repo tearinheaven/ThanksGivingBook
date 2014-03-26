@@ -34,7 +34,7 @@
             	android:layout_marginLeft="10dp"
 		        android:text="@string/nav_home_string"
 		        android:textColor="@drawable/nav_text_bg"
-		        android:textSize="18sp" />
+		        android:textSize="16sp" />
 		</LinearLayout>
 		<LinearLayout 
 	        android:id="@+id/nav_menu_draft"
@@ -57,7 +57,7 @@
             	android:layout_marginLeft="10dp"
 		        android:text="@string/nav_draft_string"
 		        android:textColor="@drawable/nav_text_bg"
-		        android:textSize="18sp" />
+		        android:textSize="16sp" />
 		</LinearLayout>
 		<LinearLayout 
 	        android:id="@+id/nav_menu_myinfo"
@@ -80,7 +80,7 @@
             	android:layout_marginLeft="10dp"
 		        android:text="@string/nav_myinfo_string"
 		        android:textColor="@drawable/nav_text_bg"
-		        android:textSize="18sp" />
+		        android:textSize="16sp" />
 		</LinearLayout>
 		<LinearLayout 
 	        android:id="@+id/nav_menu_setup"
@@ -103,19 +103,19 @@
             	android:layout_marginLeft="10dp"
 		        android:text="@string/nav_setup_string"
 		        android:textColor="@drawable/nav_text_bg"
-		        android:textSize="18sp" />
+		        android:textSize="16sp" />
 		</LinearLayout>
 		<RelativeLayout 
 	        android:id="@+id/nav_menu_last"
 	        android:layout_width="fill_parent"
 	        android:layout_height="match_parent"
 	        android:layout_marginTop="1dp"
-	        android:padding="8dp"
 			android:background="@drawable/nav_item_bg">
 		    <TextView
 		        android:id="@+id/nav_text_version"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
+		        android:layout_marginBottom="17dp"
         		android:layout_alignParentBottom="true"
         		android:layout_centerHorizontal="true"
 		        android:text="@string/nav_version_string"
