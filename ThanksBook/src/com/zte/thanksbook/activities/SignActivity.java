@@ -1,5 +1,6 @@
 package com.zte.thanksbook.activities;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +18,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 import com.zte.thanksbook.R;
+import com.zte.thanksbook.entity.User;
 import com.zte.thanksbook.util.MD5Util;
 import com.zte.thanksbook.util.WebDataProcessListener;
 import com.zte.thanksbook.util.WebDataTask;
@@ -108,6 +113,13 @@ public class SignActivity extends Activity implements WebDataProcessListener {
 	@Override
 	public void onPostExecute(String result) {
 		Log.v(null, result);
+		Gson gson = new Gson();
+		Map<String, Object> rs = gson.fromJson(result, new TypeToken<Map<String, Object>>() {}.getType());
+		Log.v(null, rs.get("result").toString());
+		//Log.v(null, rs.get("user").toString());
+		User user = gson.fromJson(gson.toJson(rs.get("user")), User.class);
+		//Map<String, Object> user = gson.fromJson(je, new TypeToken<Map<String, Object>>() {}.getType());
+		Log.v(null, user.getUserEmail());
 	}
 
 }
