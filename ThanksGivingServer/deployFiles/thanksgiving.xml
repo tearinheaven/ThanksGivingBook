@@ -1,0 +1,6 @@
+<Context 
+	docBase="E:\MyEclipseWS\ThanksGivingServer\WebContent" 
+	reloadable="true" 
+	path="/thanksgiving" 
+	workDir="E:\MyEclipseWS\ThanksGivingServer\WebContent\work"> 
+</Context> 

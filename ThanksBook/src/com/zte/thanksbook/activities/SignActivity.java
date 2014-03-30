@@ -1,18 +1,29 @@
 package com.zte.thanksbook.activities;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zte.thanksbook.R;
+import com.zte.thanksbook.util.MD5Util;
+import com.zte.thanksbook.util.WebDataProcessListener;
+import com.zte.thanksbook.util.WebDataTask;
 
-public class SignActivity extends Activity {	
-	
+public class SignActivity extends Activity implements WebDataProcessListener {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,19 +40,20 @@ public class SignActivity extends Activity {
 		bar.setDisplayHomeAsUpEnabled(true);
 		bar.setDisplayShowCustomEnabled(true);
 		bar.setCustomView(R.layout.actionbar_layout_child);
-		((TextView)this.findViewById(R.id.actionbar_title)).setText("◊¢≤·");
-		this.findViewById(R.id.actionbar_menu_back).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				SignActivity.this.finish();
-			}
-		});
+		((TextView) this.findViewById(R.id.actionbar_title)).setText("◊¢≤·");
+		this.findViewById(R.id.actionbar_menu_back).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						SignActivity.this.finish();
+					}
+				});
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.sign, menu);
+		// getMenuInflater().inflate(R.menu.sign, menu);
 		return true;
 	}
 
@@ -49,17 +61,53 @@ public class SignActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void signIn(View view) {
+		// ” º˛µÿ÷∑
+		EditText mailText = (EditText) this.findViewById(R.id.sign_text_mail);
+		String mail = mailText.getText().toString();
+
+		String regex = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(mail);
+		if (!m.matches() || mail.length() > 200) {
+			mailText.setError("«Î ‰»Î’˝»∑µƒ” œ‰µÿ÷∑");
+			return;
+		}
+
+		// √‹¬Î
+		EditText passwordText = (EditText) this
+				.findViewById(R.id.sign_text_password);
+		String password = passwordText.getText().toString();
+		if (password.length() < 6 || password.length() > 14) {
+			passwordText.setError(this.getString(R.string.user_password_hint));
+		}
+		String passwordEncryption = MD5Util.MD5Encode(password);
+		this.addUser(mail, passwordEncryption);
+	}
+
+	public void addUser(String mail, String password) {
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+			StringBuffer url = new StringBuffer();
+			url.append(
+					"http://testasp.vicp.cc/thanksgiving/user?operation=signUp&userEmail=")
+					.append(mail).append("&userPassword=").append(password);
+			new WebDataTask(this).execute(url.toString());
+		} else {
+
+		}
+	}
+
+	@Override
+	public void onPostExecute(String result) {
+		Log.v(null, result);
 	}
 
 }
