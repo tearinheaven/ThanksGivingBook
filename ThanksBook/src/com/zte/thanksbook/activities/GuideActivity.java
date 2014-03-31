@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 import com.zte.thanksbook.R;
 
@@ -29,6 +32,15 @@ public class GuideActivity extends Activity implements OnPageChangeListener{
 		View page2 = inflater.inflate(R.layout.guide_two, null);
 		views.add(page2);
 		View page3 = inflater.inflate(R.layout.guide_three, null);
+		Button signBtn = (Button)page3.findViewById(R.id.sign);
+		signBtn.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				Intent signIntent = new Intent(GuideActivity.this,SignActivity.class);
+				startActivity(signIntent);
+			}
+		});
+		Button loginBtn = (Button)page3.findViewById(R.id.login);
 		views.add(page3);
 		ViewPager viewPager = (ViewPager)this.findViewById(R.id.viewPager);
 		PageViewAdapter adapter = new PageViewAdapter(views,this);
