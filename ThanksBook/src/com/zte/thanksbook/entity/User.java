@@ -1,5 +1,7 @@
 package com.zte.thanksbook.entity;
 
+import java.sql.Timestamp;
+
 public class User {
 	private String userEmail;
 	
@@ -8,6 +10,16 @@ public class User {
 	private String userName;
 	
 	private String userSignature;
+	
+	private String lastUpdateDateString;
+
+	public String getLastUpdateDateString() {
+		return lastUpdateDateString;
+	}
+
+	public void setLastUpdateDateString(String lastUpdateDateString) {
+		this.lastUpdateDateString = lastUpdateDateString;
+	}
 
 	public String getUserEmail() {
 		return userEmail;

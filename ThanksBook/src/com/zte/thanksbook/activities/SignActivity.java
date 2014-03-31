@@ -19,9 +19,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.zte.thanksbook.R;
+import com.zte.thanksbook.db.SQLiteHelper;
+import com.zte.thanksbook.db.UserDao;
 import com.zte.thanksbook.entity.User;
 import com.zte.thanksbook.util.MD5Util;
 import com.zte.thanksbook.util.WebDataProcessListener;
@@ -120,6 +121,11 @@ public class SignActivity extends Activity implements WebDataProcessListener {
 		User user = gson.fromJson(gson.toJson(rs.get("user")), User.class);
 		//Map<String, Object> user = gson.fromJson(je, new TypeToken<Map<String, Object>>() {}.getType());
 		Log.v(null, user.getUserEmail());
+		Log.v(null, user.getUserId());
+		Log.v(null, user.getUserSignature());
+		Log.v(null, user.getUserName());
+		Log.v(null, user.getLastUpdateDateString());
+		UserDao.addUser(this, user);
 	}
 
 }
