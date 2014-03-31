@@ -28,10 +28,12 @@ public class BootStrapActivity extends Activity {
 				Intent toGuide = new Intent(BootStrapActivity.this,GuideActivity.class);
 				startActivity(toGuide);
 				finish();
+				break;
 			case TO_MAIN_PAGE:
 				Intent toMain = new Intent(BootStrapActivity.this,MainActivity.class);
 				startActivity(toMain);
 				finish();
+				break;
 			}
 		}
 	};
