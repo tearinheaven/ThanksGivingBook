@@ -1,6 +1,7 @@
 package com.thanksgiving.service.impl;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,7 @@ public class UserDs implements IUserDs {
 		user.setLastUpdateDate(time);
 		
 		user.setUserId(this.userDao.addUser(user));		
+		user.setLastUpdateDateString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(time.getTime())));
 		userBO.setResult(UserBO.SAVE_SUCCESS);		
 		return userBO;
 	}

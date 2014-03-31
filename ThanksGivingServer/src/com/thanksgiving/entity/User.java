@@ -35,9 +35,19 @@ public class User {
 	
     @Column(name = "last_update_date")
 	private Timestamp lastUpdateDate;
+    
+    private String lastUpdateDateString;
 	
     @Column(name = "enable_flag")
 	private String enableFlag;
+
+	public String getLastUpdateDateString() {
+		return lastUpdateDateString;
+	}
+
+	public void setLastUpdateDateString(String lastUpdateDateString) {
+		this.lastUpdateDateString = lastUpdateDateString;
+	}
 
 	public int getUserId() {
 		return userId;
