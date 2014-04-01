@@ -18,6 +18,11 @@ public class UserDs implements IUserDs {
 	@Autowired
 	private IUserDao userDao;
 
+	/**
+	 * 新增用户
+	 * @param userBO
+	 * @return
+	 */
 	@Override
 	public UserBO addUser(UserBO userBO) {
 		User user = userBO.getUser();
@@ -57,7 +62,7 @@ public class UserDs implements IUserDs {
 		
 		user.setUserId(this.userDao.addUser(user));		
 		user.setLastUpdateDateString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(time.getTime())));
-		userBO.setResult(UserBO.SAVE_SUCCESS);		
+		userBO.setResult(UserBO.OPERACTION_SUCCESS);		
 		return userBO;
 	}
 
@@ -67,6 +72,16 @@ public class UserDs implements IUserDs {
 
 	public void setUserDao(IUserDao userDao) {
 		this.userDao = userDao;
+	}
+
+	/**
+	 * 用户登录
+	 * @param userBO
+	 * @return
+	 */
+	@Override
+	public UserBO userLogin(UserBO userBO) {
+		return this.userDao.userLogin(userBO);
 	}
 
 }

@@ -54,6 +54,30 @@ public class UserServlet extends HttpServlet {
 			response.setContentType("text/html");
 			response.getWriter().print(rs);
 		}
+		else if ("loginIn".equals(operation))
+		{
+			User user = new User();
+			user.setUserPassword(request.getParameter("userPassword"));
+			
+			String account = request.getParameter("userAccount");
+			if (account.indexOf("@") > -1)
+			{
+				user.setUserEmail(account);
+			}
+			else
+			{
+				user.setUserName(account);
+			}
+			
+			UserBO userBO = new UserBO();
+			userBO.setUser(user);
+			userBO = ds.userLogin(userBO);
+
+			JSONObject rs = JSONObject.fromObject(userBO);
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html");
+			response.getWriter().print(rs);
+		}
 		
 		//request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
