@@ -73,12 +73,12 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+		/*switch (item.getItemId()) {
 		case R.id.action_filter:
 			Intent intent = new Intent(this, SignActivity.class);
 			startActivity(intent);
 			return true;
-		}
+		}*/
 		return super.onOptionsItemSelected(item);
 	}
 

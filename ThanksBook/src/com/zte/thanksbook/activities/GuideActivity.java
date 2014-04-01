@@ -41,9 +41,19 @@ public class GuideActivity extends Activity implements OnPageChangeListener{
 			@Override
 			public void onClick(View arg0) {
 				Intent signIntent = new Intent(GuideActivity.this,SignActivity.class);
+				signIntent.putExtra("signType", SignActivity.TYPE_SIGN_UP);
 				startActivity(signIntent);
 			}
 		});
+		/*Button loginBtn = (Button)page3.findViewById(R.id.login);
+		loginBtn.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				Intent loginIntent = new Intent(GuideActivity.this,SignActivity.class);
+				loginIntent.putExtra("signType", SignActivity.TYPE_LOGIN_IN);
+				startActivity(loginIntent);
+			}
+		});*/
 		views.add(page3);
 		ViewPager viewPager = (ViewPager)this.findViewById(R.id.viewPager);
 		PageViewAdapter adapter = new PageViewAdapter(views,this);

@@ -18,8 +18,11 @@
     <string name="title_activity_boot_strap">BootStrapActivity</string>
     <string name="title_activity_guide">GuideActivity</string>
     <string name="title_activity_sign">注册</string>
+    <string name="title_activity_login">登录</string>
     <string name="email_address">邮箱</string>
     <string name="email_address_hint">请使用您的常用邮箱地址</string>
+    <string name="user_account">帐号</string>
+    <string name="user_account_hint">用户名/邮箱</string>
     <string name="user_password">密码</string>
     <string name="user_password_hint">长度在6-14之间</string>
     <string name="welcome_str">记录、分享、发现生活中的小美好</string>

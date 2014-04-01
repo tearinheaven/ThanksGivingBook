@@ -22,4 +22,18 @@ public class TGUtil {
 		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
 		toast.show();
 	}
+	
+	/**
+	 * ÅÐ¶Ï×Ö·û´®ÊÇ·ñÎª¿Õ
+	 * @param str
+	 * @return
+	 */
+	public static boolean isEmpty(String str)
+	{
+		if (str==null || "".equals(str))
+		{
+			return true;
+		}
+		return false;
+	}
 }

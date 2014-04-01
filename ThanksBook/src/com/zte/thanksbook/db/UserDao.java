@@ -28,7 +28,7 @@ public class UserDao {
             cv.put("user_name", user.getUserName());             
             cv.put("user_signature", user.getUserSignature());             
             cv.put("last_update_date", user.getLastUpdateDateString());  
-            database.insert(USER_TABLE_NAME, null, cv);
+            database.insertWithOnConflict(USER_TABLE_NAME, null, cv, SQLiteDatabase.CONFLICT_REPLACE);
         } catch (Exception e) {  
             e.printStackTrace();  
         } finally {  
