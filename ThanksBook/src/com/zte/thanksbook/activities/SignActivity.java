@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -24,7 +25,10 @@ import com.zte.thanksbook.R;
 import com.zte.thanksbook.db.SQLiteHelper;
 import com.zte.thanksbook.db.UserDao;
 import com.zte.thanksbook.entity.User;
+import com.zte.thanksbook.service.UserBO;
 import com.zte.thanksbook.util.MD5Util;
+import com.zte.thanksbook.util.PreferenceUtil;
+import com.zte.thanksbook.util.TGUtil;
 import com.zte.thanksbook.util.WebDataProcessListener;
 import com.zte.thanksbook.util.WebDataTask;
 
@@ -116,16 +120,32 @@ public class SignActivity extends Activity implements WebDataProcessListener {
 		Log.v(null, result);
 		Gson gson = new Gson();
 		Map<String, Object> rs = gson.fromJson(result, new TypeToken<Map<String, Object>>() {}.getType());
-		Log.v(null, rs.get("result").toString());
-		//Log.v(null, rs.get("user").toString());
-		User user = gson.fromJson(gson.toJson(rs.get("user")), User.class);
-		//Map<String, Object> user = gson.fromJson(je, new TypeToken<Map<String, Object>>() {}.getType());
-		Log.v(null, user.getUserEmail());
-		Log.v(null, user.getUserId());
-		Log.v(null, user.getUserSignature());
-		Log.v(null, user.getUserName());
-		Log.v(null, user.getLastUpdateDateString());
-		UserDao.addUser(this, user);
+		//Log.v(null, rs.get("result").toString());
+		double resultCode = Double.valueOf(rs.get("result").toString());
+		if (UserBO.SAVE_SUCCESS == resultCode)
+		{
+			//Log.v(null, rs.get("user").toString());
+			User user = gson.fromJson(gson.toJson(rs.get("user")), User.class);
+			//Map<String, Object> user = gson.fromJson(je, new TypeToken<Map<String, Object>>() {}.getType());
+			Log.v(null, user.getUserEmail());
+			Log.v(null, user.getUserId());
+			Log.v(null, user.getUserSignature());
+			Log.v(null, user.getUserName());
+			Log.v(null, user.getLastUpdateDateString());
+			UserDao.addUser(this, user);
+			
+			PreferenceUtil.setBooleanPre(this, PreferenceUtil.IS_FIRST_USE, false);
+			PreferenceUtil.setStringPre(this, PreferenceUtil.USER_NAME, user.getUserName());
+			
+			Intent toMain = new Intent(SignActivity.this ,MainActivity.class);
+			startActivity(toMain);
+			finish();
+		}
+		else if (UserBO.USEREMAIL_DUPLICATE == resultCode)
+		{
+			//((EditText)this.findViewById(R.id.sign_text_mail)).setError("该邮箱已被使用");
+			TGUtil.showToast(this, "该邮箱已被使用，请换个邮箱~", 3000);
+		}
 	}
 
 }

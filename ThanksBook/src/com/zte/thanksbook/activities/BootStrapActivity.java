@@ -9,11 +9,11 @@ import android.os.Message;
 import android.view.Menu;
 
 import com.zte.thanksbook.R;
+import com.zte.thanksbook.util.PreferenceUtil;
 
 public class BootStrapActivity extends Activity {
 
 	private boolean isFirstUse = true;
-	private static final String IS_FIRST_NAME = "first_use";
 	private static final int TO_GUIDE_PAGE = 1;
 	private static final int TO_MAIN_PAGE = 2;
 	private static final int DELAY_MILLS = 3000;
@@ -43,8 +43,7 @@ public class BootStrapActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_boot_strap);
 		this.getActionBar().hide();
-		SharedPreferences  sharePre = this.getSharedPreferences(IS_FIRST_NAME, MODE_PRIVATE);
-		isFirstUse = sharePre.getBoolean(IS_FIRST_NAME, true);
+		isFirstUse = PreferenceUtil.getBooleanPre(this, PreferenceUtil.IS_FIRST_USE, true);
 		if(!isFirstUse)
 		{
 			handler.sendEmptyMessageDelayed(TO_MAIN_PAGE, DELAY_MILLS);

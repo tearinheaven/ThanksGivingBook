@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.zte.thanksbook.entity.User;
 
 public class UserDao {
+	
     public static final String USER_TABLE_NAME = "ts_user";
     public static final String USER_TABLE_CREATE =
                 "CREATE TABLE " + USER_TABLE_NAME + " (" +
@@ -33,7 +34,7 @@ public class UserDao {
         } finally {  
             if(database != null){  
                 database.close();  
-            }            
+            }
         }
 	}
 }
