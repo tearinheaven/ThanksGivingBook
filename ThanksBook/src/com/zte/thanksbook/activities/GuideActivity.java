@@ -13,12 +13,16 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.zte.thanksbook.R;
 
 public class GuideActivity extends Activity implements OnPageChangeListener{
 	
 	private List<View> views;
+	private LinearLayout dots;
+	private int currentDotIndex;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +44,29 @@ public class GuideActivity extends Activity implements OnPageChangeListener{
 				startActivity(signIntent);
 			}
 		});
-		Button loginBtn = (Button)page3.findViewById(R.id.login);
 		views.add(page3);
 		ViewPager viewPager = (ViewPager)this.findViewById(R.id.viewPager);
 		PageViewAdapter adapter = new PageViewAdapter(views,this);
 		viewPager.setAdapter(adapter);
 		viewPager.setOnPageChangeListener(this);
+		dots = (LinearLayout)this.findViewById(R.id.dots);
+		changeDots(0);
 	}
 	
+	private void changeDots(int index)
+	{
+		for(int i=0;i<views.size();i++)
+		{
+			ImageView img = (ImageView)dots.getChildAt(i);
+			if(i!=index)
+			{
+				img.setBackgroundResource(R.drawable.dot_2);
+			}else
+			{
+				img.setBackgroundResource(R.drawable.dot_1);
+			}
+		}
+	}
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
 		
@@ -59,8 +78,8 @@ public class GuideActivity extends Activity implements OnPageChangeListener{
 	}
 
 	@Override
-	public void onPageSelected(int arg0) {
-		
+	public void onPageSelected(int index) {
+		changeDots(index);
 	}
 
 	@Override
