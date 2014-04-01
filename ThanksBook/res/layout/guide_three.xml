@@ -6,15 +6,6 @@
     android:paddingTop="20dp"
     android:orientation="vertical" >
     
-    <TextView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/guide3_title"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textSize="18sp"
-        />
 	<ImageView
 		android:layout_height="200dp"
 		android:layout_width="200dp"
@@ -49,36 +40,17 @@
         android:text="@string/guide3_str4"
         android:textSize="16sp"
 	    />
-	<LinearLayout 
-	    android:layout_width="wrap_content"
-	    android:layout_height="60dp"
-	    android:layout_gravity="center"
-	    >
-	</LinearLayout>
-	<LinearLayout 
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="center"
-	    >
-	    <Button 
-	        android:id="@+id/login"
-	        android:layout_width="100dp"
-	        android:layout_height="wrap_content"
-	        android:text="登陆"
-	        android:textColor="#FFF"
-	        android:textSize="20sp"
-	        android:layout_marginRight="30dp"
-	        android:background="#29d9c2"
-	        />
-	    <Button 
-	        android:id="@+id/sign"
-	        android:layout_width="100dp"
-	        android:layout_height="wrap_content"
-	        android:text="注册"
-	        android:textColor="#FFF"
-	        android:textSize="20sp"
-	        android:background="#4bccef"
-	        />
-	</LinearLayout>
+	
+    <Button 
+        android:id="@+id/sign"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="注册"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        android:layout_marginTop="40dp"
+        android:background="#4bccef"
+        />
     
 </LinearLayout>
