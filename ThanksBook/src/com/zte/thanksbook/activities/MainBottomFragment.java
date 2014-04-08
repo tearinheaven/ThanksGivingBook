@@ -30,7 +30,8 @@ public class MainBottomFragment extends Fragment {
 		addVideo.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				
+				Intent intent = new Intent(getActivity(),NewAudioMessageActivity.class);
+				startActivity(intent);
 			}
 		});
 		return view;

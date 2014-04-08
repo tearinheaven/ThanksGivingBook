@@ -27,8 +27,14 @@
     <string name="user_password_hint">长度在6-14之间</string>
     <string name="welcome_str">记录、分享、发现生活中的小美好</string>
     <string name="guide3_title">记录你的感动瞬间</string>
-	<string name="guide3_str1">图片、文字、语音，</string>
-	<string name="guide3_str2">选择你喜欢的记录方式</string>
-	<string name="guide3_str3">因谁感动？</string>
-	<string name="guide3_str4">人物标签一目了然</string>
+    <string name="guide3_str1">图片、文字、语音，</string>
+    <string name="guide3_str2">选择你喜欢的记录方式</string>
+    <string name="guide3_str3">因谁感动？</string>
+    <string name="guide3_str4">人物标签一目了然</string>
+    <string name="title_activity_new_audio_message">NewAudioMessageActivity</string>
+    <string name="cancel">取消</string>
+    <string name="next">下一步</string>
+    <string name="mic_text_init">按住录音</string>
+    <string name="mic_description">按住录音</string>
+
 </resources>

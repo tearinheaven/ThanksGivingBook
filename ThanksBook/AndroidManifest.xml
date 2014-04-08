@@ -41,7 +41,7 @@
         <activity
             android:name="com.zte.thanksbook.activities.NewVideoMessageActivity"
             android:label="@string/title_activity_new_video_message" >
-        </activity>
+        </activity>
         -->
         <activity
             android:name="com.zte.thanksbook.activities.BootStrapActivity"
@@ -63,6 +63,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.zte.thanksbook.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.zte.thanksbook.activities.NewAudioMessageActivity"
+            android:label="@string/title_activity_new_audio_message" >
         </activity>
     </application>
 
