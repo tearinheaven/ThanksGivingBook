@@ -36,5 +36,6 @@
     <string name="next">下一步</string>
     <string name="mic_text_init">按住录音</string>
     <string name="mic_description">按住录音</string>
+    <string name="mic_re_record">重录</string>
 
 </resources>
