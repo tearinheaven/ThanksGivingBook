@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <Button
+        android:id="@+id/nav_shadow"
+        android:layout_width="fill_parent"
+        android:paddingTop="48dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+    	android:background="#86222222" />
+	<TextView 
+	    android:id="@+id/save"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="保存草稿"
+	    android:padding="10dp"
+	    android:gravity="center"
+	    android:background="@drawable/border"
+	    />
+	<TextView 
+	    android:id="@+id/unsave"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="不保存"
+	    android:padding="10dp"
+	    android:gravity="center"
+	    android:background="@drawable/border"
+	    />
+	<TextView 
+	    android:id="@+id/cancel"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="取消"
+	    android:padding="10dp"
+	    android:gravity="center"
+	    android:background="@drawable/border"
+	    />
+</LinearLayout>

@@ -8,9 +8,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
@@ -31,6 +33,11 @@ import android.widget.Toast;
 
 import com.zte.thanksbook.R;
 
+/**
+ * 新建感恩文本图片类
+ * @author huangjianxin
+ * @since 20140410
+ */
 public class NewTextMessageActivity extends Activity implements OnClickListener {
 
 	private static final int TAKEPHOTO = 1;
@@ -91,9 +98,46 @@ public class NewTextMessageActivity extends Activity implements OnClickListener 
 				
 			}
 		});
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		ActionBar bar = getActionBar();
+		bar.setDisplayHomeAsUpEnabled(true);
+		bar.setDisplayShowCustomEnabled(true);
+		bar.setCustomView(R.layout.actionbar_layout_new_text);
+		ImageButton up = (ImageButton)this.findViewById(R.id.actionbar_back);
+		up.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				
+				//boolean needSave = !"".equals(thanksMsg.getText().toString().trim())&&(photos!=null&&photos.size()>0);
+				//if(true)
+				//{
+					NewTextMessageShadowFragment fragment = new NewTextMessageShadowFragment(photos);
+					FragmentManager manager = getFragmentManager();
+					FragmentTransaction tran = manager.beginTransaction();
+					tran.replace(R.id.new_text_message, fragment);
+					tran.addToBackStack(null);
+					tran.commit();
+				//}
+			}
+		});
+		/*this.findViewById(R.id.actionbar_back).setOnClickListener(
+			new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if(true)
+					{
+						Log.i("heheh","start");
+						NewTextMessageShadowFragment fragment = new NewTextMessageShadowFragment();
+						FragmentManager manager = getFragmentManager();
+						FragmentTransaction tran = manager.beginTransaction();
+						tran.add(fragment, "");
+						//tran.replace(R.id.shadow, fragment);
+						tran.addToBackStack(null);
+						tran.commit();
+						Log.i("heheh","end");
+					}
+				}
+		});*/
 	}
-    
     
 
 	@Override
@@ -102,7 +146,7 @@ public class NewTextMessageActivity extends Activity implements OnClickListener 
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	@Override
+	/*@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId())
 		{
@@ -111,7 +155,7 @@ public class NewTextMessageActivity extends Activity implements OnClickListener 
 		        return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
+	}*/
 
 	@Override
 	public void onClick(View v) {
