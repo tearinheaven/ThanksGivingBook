@@ -1,7 +1,16 @@
 package com.zte.thanksbook.db;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.List;
+
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 
 import com.zte.thanksbook.entity.ThanksMessageEntity;
 
@@ -14,24 +23,128 @@ public class ThanksMessageDAO {
 	
 	private SQLiteHelper helper;
 	private SQLiteDatabase db;
+	private Context context;
 	
-	private static final String projection[] = {"_id","message_text","message_img","create_by","thank_to","create_date"};
+	private static final String projection[] = {};
 	
-	private static final String USER_TABLE_NAME = "ts_thanks_message";
-	private static final String CREATE_THANKS_MESSAGE = "create table "+USER_TABLE_NAME+"(" +
+	private static final String TABLE_NAME_MSG = "ts_thanks_message";
+	private static final String TABLE_NAME_IMG = "ts_thanks_img";
+	private static final String CREATE_THANKS_MESSAGE = "create table "+TABLE_NAME_MSG+"(" +
 			"id INTEGER PRIMARY KEY AUTOINCREMENT,"+"message_text TEXT,"+"enable_flag char(1)," +"status varchar(10)," +
 			"create_by INTEGER,thank_to TEXT,create_date DATETIME,last_update_date DATETIME);";
+	private static final String CREATE_THANKS_IMG = "create table "+TABLE_NAME_IMG+"(" +
+			"id INTEGER PRIMARY KEY AUTOINCREMENT,"+"belong_to INTEGER,"+"original_img blob," +"thumbnail blob," +
+			"enable_flag char(1),create_date DATETIME,last_update_date DATETIME);";
+	private static final String INSERT_MESSAGE = "insert into "+TABLE_NAME_MSG+" (message_text,enable_flag,status,create_by,thank_to,"
+			 									+"create_date,last_update_date) values (?,'Y',?,?,?,sysdate,sysdate)";
+	private static final String INSERT_IMG = "insert into "+TABLE_NAME_IMG+"(belong_to,original_img,thumbnail,enable_flag,"
+			 								+"create_date,last_update_date) values (?,?,?,'Y',sysdate,sysdate)";
 	
-	public ThanksMessageDAO()
+	public ThanksMessageDAO(Context context)
 	{
-		helper = new SQLiteHelper(null,CREATE_THANKS_MESSAGE);
+		helper = new SQLiteHelper(null,new String[]{CREATE_THANKS_MESSAGE,CREATE_THANKS_IMG});
 		db = helper.getWritableDatabase();
 	}
 	
-	public void addThanksMessage(ThanksMessageEntity message)
+	/**
+	 * 添加文本类感恩信息
+	 * @param message
+	 * @return
+	 */
+	public boolean addThanksMessage(ThanksMessageEntity msg)
+	{
+		boolean result = false;
+		SQLiteStatement stat = null;
+		db.beginTransaction();
+		stat = addText(msg);
+		Long msgId = stat.executeInsert();
+		
+		List<Uri> imgs =msg.getImgs();
+		if(imgs!=null&&imgs.size()>0)
+		{
+			stat = db.compileStatement(INSERT_IMG);
+			for(Uri uri:imgs)
+			{
+				try
+				{
+					stat = addImg(stat,msgId,uri);
+				}catch(IOException e)
+				{
+					e.printStackTrace();
+					return result;
+				}
+				stat.executeInsert();
+			}
+		}
+		db.setTransactionSuccessful();
+		db.endTransaction();
+		db.close();
+		result = true;
+		return result;
+	}
+	
+	/**
+	 * 添加语音类感恩信息
+	 * @param msg
+	 * @return
+	 */
+	public boolean addThanksVideo(Long msgId,SQLiteStatement stat)
+	{
+		boolean result = false;
+		
+		
+		return result;
+	}
+	
+	/**
+	 * 添加文本
+	 * @param text
+	 * @return
+	 */
+	private SQLiteStatement addText(ThanksMessageEntity text)
+	{
+		SQLiteStatement stat = db.compileStatement(INSERT_MESSAGE);
+		stat.bindString(1, text.getMessageText());
+		stat.bindString(2, "unSYN");
+		stat.bindLong(3, text.getCreateBy());
+		stat.bindString(4, text.getThanksTo());
+		return stat;
+	}
+	
+	/**
+	 * 添加图片
+	 * @param stat
+	 * @param msgId
+	 * @param img
+	 * @return
+	 * @throws IOException
+	 */
+	private SQLiteStatement addImg (SQLiteStatement stat,Long msgId,Uri img)  throws IOException
+	{
+		stat.clearBindings();
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		Bitmap map = MediaStore.Images.Media.getBitmap(context.getContentResolver(), img);
+		map.compress(Bitmap.CompressFormat.PNG, 100, os);
+		stat.bindLong(1, msgId);
+		stat.bindBlob(2, os.toByteArray());
+		stat.bindBlob(3,os.toByteArray());//缩略图待处理
+		return stat;
+	}
+	
+	/**
+	 * 添加语音
+	 * @param stat
+	 * @param msgId
+	 * @param vedio
+	 * @return
+	 * @throws IOException
+	 */
+	private SQLiteStatement addVedio(SQLiteStatement stat,Long msgId,Uri vedio) throws IOException
 	{
 		
+		return stat;
 	}
+	
 	/**
 	 * 感恩数据查询
 	 * @return Cursor

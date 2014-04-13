@@ -17,7 +17,7 @@ public class UserDao {
 	
 	public static void addUser(Context context, User user)
 	{
-		SQLiteHelper dbHelper = new SQLiteHelper(context,USER_TABLE_CREATE);
+		SQLiteHelper dbHelper = new SQLiteHelper(context,new String[]{USER_TABLE_CREATE});
 		
 		SQLiteDatabase database = null;  
         try {  

@@ -1,6 +1,9 @@
 package com.zte.thanksbook.entity;
 
 import java.sql.Blob;
+import java.util.List;
+
+import android.net.Uri;
 
 public class ThanksMessageEntity {
 
@@ -26,14 +29,25 @@ public class ThanksMessageEntity {
 	/**
 	 * 创建者
 	 */
-	private String createBy;
+	private Long createBy;
 	
 	/**
 	 * 感恩对象
 	 */
 	private String thanksTo;
 	
+	/**
+	 * 图片
+	 */
+	private List<Uri> imgs;
 	
+	
+	public List<Uri> getImgs() {
+		return imgs;
+	}
+	public void setImgs(List<Uri> imgs) {
+		this.imgs = imgs;
+	}
 	public int getId() {
 		return id;
 	}
@@ -52,10 +66,10 @@ public class ThanksMessageEntity {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
-	public String getCreateBy() {
+	public Long getCreateBy() {
 		return createBy;
 	}
-	public void setCreateBy(String createBy) {
+	public void setCreateBy(Long createBy) {
 		this.createBy = createBy;
 	}
 	public String getThanksTo() {

@@ -10,16 +10,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	
 	private static final int DATABASE_VERSION = 1;
 	
-	private String tableCreateSql;
+	private String[] tableCreateSql;
 
-    public SQLiteHelper(Context context,String tableCreateSql) {
+    public SQLiteHelper(Context context,String[] tableCreateSql) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.tableCreateSql = tableCreateSql;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(tableCreateSql);
+    	for(String createSql:tableCreateSql)
+    	{
+    		db.execSQL(createSql);
+    	}
         /*String[] names = MainActivity.resources.getStringArray(R.array.activity_names);
         String[] types = MainActivity.resources.getStringArray(R.array.activity_types);
         for (int i=0; i<names.length; i++)
