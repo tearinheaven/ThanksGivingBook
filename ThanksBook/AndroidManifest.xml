@@ -8,9 +8,11 @@
         android:minSdkVersion="11"
         android:targetSdkVersion="18" />
 
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" /><!-- 摄像头 -->
+    <uses-permission android:name="android.permission.INTERNET" /><!-- 互联网访问 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /><!-- 获取网络访问状态 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /><!-- 读写SD卡 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /><!-- 录音 -->
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -66,7 +68,8 @@
         </activity>
         <activity
             android:name="com.zte.thanksbook.activities.NewAudioMessageActivity"
-            android:label="@string/title_activity_new_audio_message" >
+            android:label="@string/title_activity_new_audio_message"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 
