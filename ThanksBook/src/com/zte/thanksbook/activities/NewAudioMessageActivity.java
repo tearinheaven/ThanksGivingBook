@@ -280,19 +280,33 @@ public class NewAudioMessageActivity extends Activity {
 	
 	//取消按钮动作
 	private ThanksShadowLinstener cancelLinstener = new ThanksShadowLinstener() {
-
+		//取消 -- 保存草稿
 		@Override
 		public void mainAction() {
 			// TODO Auto-generated method stub
 			
 		}
 
+		//取消 -- 取消发布
 		@Override
 		public void subAction() {
-			// TODO Auto-generated method stub
-			
+			//释放资源
+			if (audioPlayer!= null)
+			{
+				audioPlayer.release();
+				audioPlayer = null;
+			}
+
+			if (!TGUtil.isEmpty(audioRecorder.getFileName()))
+			{
+				audioRecorder.release();
+			}
+
+			//销毁当前的Activity
+			NewAudioMessageActivity.this.finish();
 		}
 
+		//取消 -- 返回
 		@Override
 		public void cancelAction() {
 			// TODO Auto-generated method stub
