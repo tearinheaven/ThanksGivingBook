@@ -44,15 +44,15 @@
             android:id="@+id/mic_re_record"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toLeftOf="@id/mic_pause_big"
             android:layout_centerVertical="true"
             android:layout_marginRight="-25dp"
+            android:layout_toLeftOf="@id/mic_pause_big"
             android:background="@drawable/oval_mic_re_record"
             android:contentDescription="@string/mic_description"
-            android:visibility="invisible"
             android:text="@string/mic_re_record"
             android:textColor="#29d9c2"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:visibility="invisible" />
 
         <ImageButton
             android:id="@+id/mic_view"
@@ -67,9 +67,9 @@
             android:id="@+id/mic_record_second"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/mic_view"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/mic_view"
             android:text=""
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
@@ -90,8 +90,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/mic_action_big"
-            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:text=""
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
@@ -104,13 +104,16 @@
         android:background="#ECECEC"
         android:orientation="horizontal" >
 
-        <TextView
+        <Button
+            android:id="@+id/mic_btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="25dp"
-            android:text="@string/cancel" />
+            android:background="@android:color/transparent"
+            android:text="@string/cancel"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/mic_btn"
@@ -124,13 +127,23 @@
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
 
-        <TextView
+        <Button
+            android:id="@+id/mic_btn_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="25dp"
-            android:text="@string/next" />
+            android:background="@android:color/transparent"
+            android:text="@string/next"
+            android:textSize="15sp" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/mic_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+    </LinearLayout>
 
 </RelativeLayout>

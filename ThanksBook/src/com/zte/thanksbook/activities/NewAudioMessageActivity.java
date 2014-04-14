@@ -3,6 +3,8 @@ package com.zte.thanksbook.activities;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
@@ -25,8 +27,6 @@ import com.zte.thanksbook.util.TGUtil;
 public class NewAudioMessageActivity extends Activity {
 	//是否按住录音按钮
 	private boolean isTouching = false;
-	//是否有录音文件
-	private boolean hasAudio = false;
 	
 	private View micActionLittle;
 	
@@ -72,20 +72,26 @@ public class NewAudioMessageActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				Log.v("asdfasdfd", "touch!!!!!");
+				//Log.v("asdfasdfd", "touch!!!!!");
 				if (audioPlayer!= null)
 				{
 					if (audioPlayer.isPlaying())
 					{
 						//暂停
+			        	ImageView micInner = (ImageView)NewAudioMessageActivity.this.findViewById(R.id.mic_view);
+			        	micInner.setBackgroundResource(R.drawable.mic_play);
+			        	
 						audioPlayer.pause();
-						Log.v("asdfasdfd", "pause!!!!!");
+						Log.v("ThanksBook", "pause!!!!!");
 					}
 					else
 					{
 						//继续播放
+			        	ImageView micInner = (ImageView)NewAudioMessageActivity.this.findViewById(R.id.mic_view);
+			        	micInner.setBackgroundResource(R.drawable.mic_pause);
+			        	
 						audioPlayer.start();
-						Log.v("asdfasdfd", "start!!!!!");
+						Log.v("ThanksBook", "start!!!!!");
 					}
 				}
 				else 
@@ -94,6 +100,9 @@ public class NewAudioMessageActivity extends Activity {
 					{
 						audioPlayer = new MediaPlayer();
 				        try {
+				        	ImageView micInner = (ImageView)NewAudioMessageActivity.this.findViewById(R.id.mic_view);
+				        	micInner.setBackgroundResource(R.drawable.mic_pause);
+				        	
 				        	audioPlayer.setDataSource(audioRecorder.getFileName());
 				        	audioPlayer.setOnCompletionListener(audioCompletionListener);
 				            audioPlayer.prepare();
@@ -103,6 +112,26 @@ public class NewAudioMessageActivity extends Activity {
 				            e.printStackTrace();
 				        }
 					}
+				}
+			}
+		});
+		
+		//取消
+		this.findViewById(R.id.mic_btn_cancel).setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				if (!TGUtil.isEmpty(audioRecorder.getFileName()))
+				{
+					ThreeButtonShadowFragment shadow = new ThreeButtonShadowFragment(new String[] {"保存草稿", "取消发布", "返回录音"}, cancelLinstener);
+					FragmentManager fragManager = getFragmentManager();
+			        FragmentTransaction tran = fragManager.beginTransaction();
+			        tran.replace(R.id.mic_shadow, shadow);
+			        tran.addToBackStack(null);
+			        tran.commit();
+				}
+				else
+				{
+					NewAudioMessageActivity.this.finish();
 				}
 			}
 		});
@@ -175,7 +204,6 @@ public class NewAudioMessageActivity extends Activity {
 					micActionLittle.setVisibility(View.INVISIBLE);
 					micActionBig.setVisibility(View.INVISIBLE);
 					
-					hasAudio = true;
 					ImageView micInner = (ImageView)NewAudioMessageActivity.this.findViewById(R.id.mic_view);
 					micInner.setBackgroundResource(R.drawable.mic_play);
 					
@@ -242,8 +270,33 @@ public class NewAudioMessageActivity extends Activity {
 		@Override
 		public void onCompletion(android.media.MediaPlayer arg0) 
 		{
+        	ImageView micInner = (ImageView)NewAudioMessageActivity.this.findViewById(R.id.mic_view);
+        	micInner.setBackgroundResource(R.drawable.mic_play);
+        	
 			audioPlayer.release();
 			audioPlayer = null;
+		}
+	};
+	
+	//取消按钮动作
+	private ThanksShadowLinstener cancelLinstener = new ThanksShadowLinstener() {
+
+		@Override
+		public void mainAction() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void subAction() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void cancelAction() {
+			// TODO Auto-generated method stub
+			
 		}
 	};
 
