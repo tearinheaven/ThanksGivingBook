@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.zte.thanksbook.R;
 import com.zte.thanksbook.util.AudioRecorder;
+import com.zte.thanksbook.util.AudioRecorder.AudioRecorderListener;
 import com.zte.thanksbook.util.PreferenceUtil;
 import com.zte.thanksbook.util.TGUtil;
 
@@ -145,7 +146,7 @@ public class NewAudioMessageActivity extends Activity {
 		if (!TGUtil.isEmpty(userName))
 		{
 			//初始化录音实例
-			this.audioRecorder = new AudioRecorder(userName);
+			this.audioRecorder = new AudioRecorder(userName, audioRecorderListener);
 		}
 		else
 		{
@@ -156,8 +157,14 @@ public class NewAudioMessageActivity extends Activity {
 	private View.OnTouchListener onMicBtnListener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			if (event.getAction() == KeyEvent.ACTION_DOWN) {
-				Log.v(null, "按下录音按钮");
+			if (event.getAction() == KeyEvent.ACTION_DOWN) {					
+				Log.v(null, "按下录音按钮");			
+				
+				if (audioRecorder.isMaxDuration())
+				{
+					TGUtil.showToast(NewAudioMessageActivity.this, "已达到最大录音时长", 3000);
+					return false;
+				}
 				isTouching = true;
 				
 				micBtn.setBackgroundResource(R.drawable.mic_recording);
@@ -176,44 +183,59 @@ public class NewAudioMessageActivity extends Activity {
 				Animation anim = AnimationUtils.loadAnimation(NewAudioMessageActivity.this, R.anim.mic_record_anim);
 				anim.setAnimationListener(animationListenerLittle);
 				micActionLittle.startAnimation(anim);
-				
+
 				audioRecorder.startRecording();
 			}
 			else if (event.getAction() == KeyEvent.ACTION_UP) {
-				Log.v(null, "松开录音按钮");
-				isTouching = false;				
+				Log.v(null, "松开录音按钮");		
 				
 				audioRecorder.stopRecording();
-				int duration = (int)(audioRecorder.getDuration() / new Long(1000));
-				//录音太短
-				if (duration < 1)
-				{
-					TGUtil.showToast(NewAudioMessageActivity.this, "录音太短", 3000);
-					audioRecorder.release();
-					NewAudioMessageActivity.this.recreate();
-				}
-				else
-				{				
-					String durString = String.valueOf(duration) + "''";
-					((TextView)NewAudioMessageActivity.this.findViewById(R.id.mic_record_second)).setText(durString);
-	
-					micBtn.setBackgroundResource(R.drawable.border_corner_mic);
-					micBtn.setText("按住继续录音");
-					micTip.setText("");
-					
-					micActionLittle.setVisibility(View.INVISIBLE);
-					micActionBig.setVisibility(View.INVISIBLE);
-					
-					ImageView micInner = (ImageView)NewAudioMessageActivity.this.findViewById(R.id.mic_view);
-					micInner.setBackgroundResource(R.drawable.mic_play);
-					
-					NewAudioMessageActivity.this.findViewById(R.id.mic_pause_big).setVisibility(View.VISIBLE);
-					NewAudioMessageActivity.this.findViewById(R.id.mic_re_record).setVisibility(View.VISIBLE);
-					((TextView)NewAudioMessageActivity.this.findViewById(R.id.mic_play_tip)).setText("点击按钮播放");
-				}
+				
 			}
 			return false;
 		}
+	};
+	
+	private AudioRecorderListener audioRecorderListener = new AudioRecorderListener() {
+		//录音结束回调函数
+		@Override
+		public void onRecorderStop() {
+			isTouching = false;		
+			
+			int duration = (int)(audioRecorder.getDuration() / new Long(1000));
+			//录音太短
+			if (duration < 1)
+			{
+				TGUtil.showToast(NewAudioMessageActivity.this, "录音太短", 3000);
+				audioRecorder.release();
+				NewAudioMessageActivity.this.recreate();
+			}
+			else
+			{				
+				String durString = String.valueOf(duration) + "''";
+				((TextView)NewAudioMessageActivity.this.findViewById(R.id.mic_record_second)).setText(durString);
+
+				micBtn.setBackgroundResource(R.drawable.border_corner_mic);
+				micBtn.setText("按住继续录音");
+				micTip.setText("");
+				
+				micActionLittle.setVisibility(View.INVISIBLE);
+				micActionBig.setVisibility(View.INVISIBLE);
+				
+				ImageView micInner = (ImageView)NewAudioMessageActivity.this.findViewById(R.id.mic_view);
+				micInner.setBackgroundResource(R.drawable.mic_play);
+				
+				NewAudioMessageActivity.this.findViewById(R.id.mic_pause_big).setVisibility(View.VISIBLE);
+				NewAudioMessageActivity.this.findViewById(R.id.mic_re_record).setVisibility(View.VISIBLE);
+				((TextView)NewAudioMessageActivity.this.findViewById(R.id.mic_play_tip)).setText("点击按钮播放");
+				
+				if (audioRecorder.isMaxDuration())
+				{
+					TGUtil.showToast(NewAudioMessageActivity.this, "已达到最大录音时长", 3000);
+				}
+			}
+		}
+		
 	};
 	
 	private AnimationListener animationListenerLittle = new AnimationListener() {
