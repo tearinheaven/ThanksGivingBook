@@ -37,5 +37,6 @@
     <string name="mic_text_init">按住录音</string>
     <string name="mic_description">按住录音</string>
     <string name="mic_re_record">重录</string>
+    <string name="title_activity_new_audio_message_next_activity">NewAudioMessageNextActivity</string>
 
 </resources>

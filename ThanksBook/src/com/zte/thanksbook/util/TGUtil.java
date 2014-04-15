@@ -35,7 +35,7 @@ public class TGUtil {
 	}
 
 	/**
-	 * 显示Toast提示
+	 * 显示Toast提示 中间
 	 * @param context
 	 * @param text
 	 * @param duration
@@ -44,6 +44,19 @@ public class TGUtil {
 	{		
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+		toast.show();
+	}
+
+	/**
+	 * 显示Toast提示 下面
+	 * @param context
+	 * @param text
+	 * @param duration
+	 */
+	public static void showToastBottom(Context context, String text, int duration) 
+	{		
+		Toast toast = Toast.makeText(context, text, duration);
+		toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
 		toast.show();
 	}
 	

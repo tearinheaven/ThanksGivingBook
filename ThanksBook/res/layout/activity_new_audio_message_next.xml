@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="48dp"
+    android:background="#FFFFFF"
+    tools:context=".NewAudioMessageNextAcitivity" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_margin="0dp" >
+
+            <TextView
+                android:id="@+id/audio_message_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/border_corner"
+                android:text="2013-03-11"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/audio_message_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/border_corner"
+                android:text="因谁感动？"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/audio_message_btn"
+                android:layout_width="290dp"
+                android:layout_height="140dp"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="#e6e6e6" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="点击添加照片"
+                android:textColor="#b3b3b3"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/audio_message_play_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/audio_message_btn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-25dp"
+                android:background="@drawable/mic_next_play"
+                android:contentDescription="@string/mic_description" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/sign_mail_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="文字描述（选填）"
+            android:textColor="#cccccc"
+            android:textColorHint="#cccccc" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/thanks_nav"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" >
+    </FrameLayout>
+
+</RelativeLayout>

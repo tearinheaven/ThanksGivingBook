@@ -5,6 +5,7 @@ import java.io.IOException;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
@@ -134,6 +135,23 @@ public class NewAudioMessageActivity extends Activity {
 			}
 		});
 		
+		//下一步
+		this.findViewById(R.id.mic_btn_next).setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				if (!TGUtil.isEmpty(audioRecorder.getFileName()))
+				{
+					Intent nextIntent = new Intent(NewAudioMessageActivity.this,NewAudioMessageNextActivity.class);
+					nextIntent.putExtra("recordFile", audioRecorder.getFileName());
+					startActivity(nextIntent);
+				}
+				else
+				{
+					TGUtil.showToastBottom(NewAudioMessageActivity.this, "请先录音", 3000);
+				}
+			}
+		});
+		
 		this.micActionLittle = NewAudioMessageActivity.this.findViewById(R.id.mic_action_little);
 		this.micActionBig = NewAudioMessageActivity.this.findViewById(R.id.mic_action_big);
 		
@@ -159,7 +177,7 @@ public class NewAudioMessageActivity extends Activity {
 				
 				if (audioRecorder.isMaxDuration())
 				{
-					TGUtil.showToast(NewAudioMessageActivity.this, "已达到最大录音时长", 3000);
+					TGUtil.showToastBottom(NewAudioMessageActivity.this, "已达到最大录音时长", 3000);
 					return false;
 				}
 				isTouching = true;
@@ -181,11 +199,7 @@ public class NewAudioMessageActivity extends Activity {
 				anim.setAnimationListener(animationListenerLittle);
 				micActionLittle.startAnimation(anim);
 
-				if (audioPlayer!=null && audioPlayer.isPlaying())
-				{
-					audioPlayer.release();
-					audioPlayer = null;
-				}
+				releasePalyer();
 				
 				audioRecorder.startRecording();
 			}
@@ -209,7 +223,7 @@ public class NewAudioMessageActivity extends Activity {
 			//录音太短
 			if (duration < 1)
 			{
-				TGUtil.showToast(NewAudioMessageActivity.this, "录音太短", 3000);
+				TGUtil.showToastBottom(NewAudioMessageActivity.this, "录音太短", 3000);
 				audioRecorder.release();
 				NewAudioMessageActivity.this.recreate();
 			}
@@ -234,7 +248,7 @@ public class NewAudioMessageActivity extends Activity {
 				
 				if (audioRecorder.isMaxDuration())
 				{
-					TGUtil.showToast(NewAudioMessageActivity.this, "已达到最大录音时长", 3000);
+					TGUtil.showToastBottom(NewAudioMessageActivity.this, "已达到最大录音时长", 3000);
 				}
 			}
 		}
@@ -298,8 +312,7 @@ public class NewAudioMessageActivity extends Activity {
         	ImageView micInner = (ImageView)NewAudioMessageActivity.this.findViewById(R.id.mic_view);
         	micInner.setBackgroundResource(R.drawable.mic_play);
         	
-			audioPlayer.release();
-			audioPlayer = null;
+        	releasePalyer();
 		}
 	};
 	
@@ -316,12 +329,8 @@ public class NewAudioMessageActivity extends Activity {
 		@Override
 		public void subAction() {
 			//释放资源
-			if (audioPlayer!= null)
-			{
-				audioPlayer.release();
-				audioPlayer = null;
-			}
-
+			releasePalyer();
+			
 			if (!TGUtil.isEmpty(audioRecorder.getFileName()))
 			{
 				audioRecorder.release();
@@ -338,5 +347,14 @@ public class NewAudioMessageActivity extends Activity {
 			
 		}
 	};
+	
+	private synchronized void releasePalyer()
+	{
+		if (audioPlayer!= null && audioPlayer.isPlaying())
+		{
+			audioPlayer.release();
+			audioPlayer = null;
+		}
+	}
 
 }
