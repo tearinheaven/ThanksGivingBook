@@ -15,7 +15,7 @@ public class AudioRecorder {
 	/**
 	 * 最大录音时长
 	 */
-	private static final long MAX_DURATION = 59900;
+	private static final long MAX_DURATION = 299900;
 	
 	/**
 	 * 当前用户名
@@ -63,6 +63,8 @@ public class AudioRecorder {
 	private AudioRecorderListener listener;
 	
 	//private RecordTask recordTask = null;
+	
+	private boolean isRecording;
 	
 	/**
 	 * 录音监听器
@@ -121,14 +123,16 @@ public class AudioRecorder {
 	            e.printStackTrace();
 	        }
 
-	        //启用后台线程录音
-	        //this.recordTask = new RecordTask();
-	        //this.recordTask.execute(new Void[]{});
+        	/*this.recordTask = null;
+        	this.recordTask = new RecordTask();
+	        this.recordTask.execute(new Void[]{});*/
 	        
-	        this.recorder.start();
+	        new RecordTask().execute(new Void[]{});
+	        
+	        //this.recorder.start();
 	        
 	        //启动后台控制录音长度的线程
-	        new RecordTimeControlTask().execute(new Void[]{});
+	        //new RecordTimeControlTask().execute(new Void[]{});
 		}
 		else
 		{
@@ -141,11 +145,10 @@ public class AudioRecorder {
 	 */
 	public synchronized void stopRecording()
 	{
-		this.doStopRecording();
-		
-		if (null != this.listener)
+		if (this.isRecording)
 		{
-			this.listener.onRecorderStop();
+			Log.v("ThanksBook", "结束录音");
+			this.isRecording = false;	
 		}
 	}
 	
@@ -156,7 +159,6 @@ public class AudioRecorder {
 	{
 		if (this.recorder!=null)
 		{
-			Log.v("ThanksBoos", "结束录音");
 			this.recorder.stop();
 			long endTime = Long.valueOf(new Date().getTime());
 			this.duration = endTime - this.currentStartTime;
@@ -205,33 +207,58 @@ public class AudioRecorder {
 		}
 	}
 	
-	/*private class RecordTask extends AsyncTask<Void, Void, Void> {
+	private class RecordTask extends AsyncTask<Void, Void, Void> {
 
 		@Override
 		protected Void doInBackground(Void... params) {
+			isRecording = true;
+			
+			Log.v("ThanksBook", "录音进程开始");
 			recorder.start();
+
+			long thisDuration = 0;				
+			long thisTime = Long.valueOf(new Date().getTime());
+			thisDuration = lastDuration + (thisTime - currentStartTime);
+			while (isRecording && thisDuration < MAX_DURATION) 
+			{
+				try {
+					Thread.sleep(500);
+				} catch (Exception ex)
+				{
+					ex.printStackTrace();
+				}
+				thisTime = Long.valueOf(new Date().getTime());
+				thisDuration = lastDuration + (thisTime - currentStartTime);
+			};
+
+			Log.v("ThanksBook", "录音进程检测到录音截止");
+			doStopRecording();
 			return null;
 		}
 		
-		@Override
-		protected void onCancelled()
-		{
-			Log.v("ThanksBook", "取消录音线程");
-			doStopRecording();
-		}
-	};*/
+		@Override  
+        protected void onPostExecute(Void result) { 		
+			if (null != listener)
+			{
+				Log.v("ThanksBook", "录音进程结束，更新UI");
+				listener.onRecorderStop();
+			}
+        }
+	};
 	
-	private class RecordTimeControlTask extends AsyncTask<Void, Integer, Void> {
+	/*private class RecordTimeControlTask extends AsyncTask<Void, Integer, Void> {
 		//控制时长为60秒
 		@Override
 		protected Void doInBackground(Void... params) {
+			Log.v("ThanksBook", "录音控制进程开始");
+			
 			try {
 				long thisDuration = 0;				
 				long thisTime = Long.valueOf(new Date().getTime());
 				thisDuration = lastDuration + (thisTime - currentStartTime);
 				while (thisDuration < MAX_DURATION) 
 				{
-					if (recorder!=null)
+					if (isRecording)
 					{
 						Thread.sleep(1000);
 						thisTime = Long.valueOf(new Date().getTime());
@@ -249,12 +276,12 @@ public class AudioRecorder {
 		
 		@Override  
         protected void onPostExecute(Void result) { 
-			if (recorder!=null)
+			if (isRecording)
 			{
 				stopRecording();
 			}
         }  
-	};
+	};*/
 	
 	/**
 	 * 获取录音文件名

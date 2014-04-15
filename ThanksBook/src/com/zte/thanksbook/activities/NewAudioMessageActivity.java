@@ -71,9 +71,6 @@ public class NewAudioMessageActivity extends Activity {
 		this.findViewById(R.id.mic_view).setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-				//Log.v("asdfasdfd", "touch!!!!!");
 				if (audioPlayer!= null)
 				{
 					if (audioPlayer.isPlaying())
@@ -156,7 +153,7 @@ public class NewAudioMessageActivity extends Activity {
 
 	private View.OnTouchListener onMicBtnListener = new View.OnTouchListener() {
 		@Override
-		public boolean onTouch(View v, MotionEvent event) {
+		public synchronized boolean onTouch(View v, MotionEvent event) {
 			if (event.getAction() == KeyEvent.ACTION_DOWN) {					
 				Log.v(null, "°´ÏÂÂ¼Òô°´Å¥");			
 				
@@ -184,6 +181,12 @@ public class NewAudioMessageActivity extends Activity {
 				anim.setAnimationListener(animationListenerLittle);
 				micActionLittle.startAnimation(anim);
 
+				if (audioPlayer!=null && audioPlayer.isPlaying())
+				{
+					audioPlayer.release();
+					audioPlayer = null;
+				}
+				
 				audioRecorder.startRecording();
 			}
 			else if (event.getAction() == KeyEvent.ACTION_UP) {
