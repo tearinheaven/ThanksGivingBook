@@ -222,7 +222,7 @@ public class AudioRecorder {
 			while (isRecording && thisDuration < MAX_DURATION) 
 			{
 				try {
-					Thread.sleep(500);
+					Thread.sleep(200);
 				} catch (Exception ex)
 				{
 					ex.printStackTrace();

@@ -141,6 +141,8 @@ public class NewAudioMessageActivity extends Activity {
 			public void onClick(View v) {
 				if (!TGUtil.isEmpty(audioRecorder.getFileName()))
 				{
+					releasePalyer();
+					
 					Intent nextIntent = new Intent(NewAudioMessageActivity.this,NewAudioMessageNextActivity.class);
 					nextIntent.putExtra("recordFile", audioRecorder.getFileName());
 					startActivity(nextIntent);

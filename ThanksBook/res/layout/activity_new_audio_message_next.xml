@@ -44,15 +44,18 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" >
 
-            <Button
+            <ImageButton
                 android:id="@+id/audio_message_btn"
-                android:layout_width="290dp"
-                android:layout_height="140dp"
-                android:layout_gravity="top|center_horizontal"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+				android:layout_alignParentTop="true"
+				android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
+                android:scaleType="centerInside"
                 android:background="#e6e6e6" />
 
             <TextView
+                android:id="@+id/audio_message_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
