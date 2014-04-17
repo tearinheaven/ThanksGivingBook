@@ -1,14 +1,18 @@
 package com.zte.thanksbook.activities;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,7 +20,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zte.thanksbook.R;
@@ -30,6 +36,8 @@ public class NewAudioMessageNextActivity extends Activity {
 	
 	private static final int CROP_PHOTO = 3;
 	
+	public static final String INTENT_PHOTO_URI = "intent_photo_uri";
+	
 	/**
 	 * 当前操作 照相、选择照片、裁剪照片
 	 */
@@ -38,7 +46,7 @@ public class NewAudioMessageNextActivity extends Activity {
 	/**
 	 * 当前照片URI
 	 */
-	private Uri currentphoto = null;
+	private Uri currentPhoto = null;
 
 	/**
 	 * 上一张URI
@@ -60,11 +68,23 @@ public class NewAudioMessageNextActivity extends Activity {
 	
 	private ImageButton imageBtn;
 	private TextView	imageTip;
+	private Button 		audioBtn;
+	
+	/**
+	 * 
+	 */
+	private Intent intent;
+	
+	/**
+	 * 录音播放工具实例
+	 */
+	private MediaPlayer audioPlayer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_audio_message_next);
+		this.intent = this.getIntent();
 
 		// 标题栏设置
 		ActionBar bar = getActionBar();
@@ -76,6 +96,11 @@ public class NewAudioMessageNextActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						releasePalyer();
+						
+						intent.putExtra(NewAudioMessageNextActivity.INTENT_PHOTO_URI, 
+								currentPhoto!=null ? currentPhoto.getPath() : "");
+						NewAudioMessageNextActivity.this.setResult(RESULT_OK, intent);
 						NewAudioMessageNextActivity.this.finish();
 					}
 				});
@@ -92,16 +117,94 @@ public class NewAudioMessageNextActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						tmpphoto = getOutputUri();
-						currentAction = TAKE_PHOTO;
-						Intent intent = new Intent(
-								MediaStore.ACTION_IMAGE_CAPTURE);
-						intent.putExtra(MediaStore.EXTRA_OUTPUT, tmpphoto);
-
-						startActivityForResult(intent, TAKE_PHOTO);
+						String[] strs = new String[] {"拍摄", "相册", "取消"};
+						if (currentPhoto != null)
+						{
+							strs = new String[] {"拍摄", "相册", "删除照片"};
+						}
+						ThreeButtonShadowFragment shadow = new ThreeButtonShadowFragment(strs, chooseLinstener);
+						FragmentManager fragManager = getFragmentManager();
+				        FragmentTransaction tran = fragManager.beginTransaction();
+				        tran.replace(R.id.audio_shadow, shadow);
+				        tran.addToBackStack(null);
+				        tran.commit();
 					}
 				});
+		
+		//播放与暂停
+		this.audioBtn = (Button)this.findViewById(R.id.audio_message_play_btn);
+		this.audioBtn.setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						toggleAudio();
+					}
+				});
+		
+		//初始化数据
+		Bundle bundle = this.intent.getExtras();
+		if (!TGUtil.isEmpty(bundle.getString(INTENT_PHOTO_URI)))
+		{
+			Log.v("ThanksBook", "初始化图片");
+			File file = new File(bundle.getString(INTENT_PHOTO_URI));
+			this.currentPhoto = Uri.fromFile(file);
+			try {
+				Bitmap bitmap = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(this.currentPhoto));
+				this.imageBtn.setImageBitmap(bitmap);
+				this.imageTip.setText("");
+			} catch (Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
 	}
+	
+	//添加照片事件
+	private ThanksShadowLinstener chooseLinstener = new ThanksShadowLinstener() {
+		//拍摄
+		@Override
+		public void mainAction() {
+			toggleAudio();
+			
+			tmpphoto = getOutputUri();
+			currentAction = TAKE_PHOTO;
+			Intent intent = new Intent(
+					MediaStore.ACTION_IMAGE_CAPTURE);
+			intent.putExtra(MediaStore.EXTRA_OUTPUT, tmpphoto);
+
+			startActivityForResult(intent, TAKE_PHOTO);
+		}
+
+		//相册
+		@Override
+		public void subAction() {
+			toggleAudio();
+			
+			currentAction = PICK_PHOTO;
+			Intent intent = new Intent();  
+	        intent.setAction(Intent.ACTION_PICK);  
+	        intent.setType("image/*");  
+	        startActivityForResult(intent, PICK_PHOTO);
+		}
+
+		//删除照片
+		@Override
+		public void cancelAction() {
+			//如果当前存在照片，则删除
+			if (currentPhoto != null)
+			{
+				//this.imageBtn.setBackgroundColor(Color.rgb(230, 230, 230));
+				File file = new File(currentPhoto.getPath());
+				if (file.exists())
+				{
+					file.delete();
+				}
+				currentPhoto = null;
+				imageBtn.setImageBitmap(null);
+				imageTip.setText("点击添加照片");
+			}
+		}
+	};
 
 	// 拍照或者选择照片结束 处理照片
 	@Override
@@ -112,12 +215,15 @@ public class NewAudioMessageNextActivity extends Activity {
 			//如果是在裁剪照片的时候取消，则删除临时照片
 			if (this.currentAction == CROP_PHOTO)
 			{
-				File file = new File(this.tmpphoto.getPath());
-				if (file.exists())
+				if (null != this.tmpphoto)
 				{
-					file.delete();
+					File file = new File(this.tmpphoto.getPath());
+					if (file.exists())
+					{
+						file.delete();
+					}
+					this.tmpphoto = null;
 				}
-				this.tmpphoto = null;
 			}
 			
 			this.currentAction = 0;
@@ -125,25 +231,26 @@ public class NewAudioMessageNextActivity extends Activity {
 		else if (resultCode == Activity.RESULT_OK)
 		{		
 			if (requestCode == TAKE_PHOTO) {
-				cropImageUri(this.tmpphoto);
+				cropImageUri(this.tmpphoto, this.tmpphoto);
 			}
 			else if (requestCode == PICK_PHOTO)
 			{
-				
+				tmpphoto = getOutputUri();
+				cropImageUri(data.getData(), this.tmpphoto);
 			}
 			else if (requestCode == CROP_PHOTO)
 			{
 				if(this.tmpphoto != null){
 					//如果当前存在照片，则删除
-					if (this.currentphoto != null)
+					if (this.currentPhoto != null)
 					{
 						//this.imageBtn.setBackgroundColor(Color.rgb(230, 230, 230));
-						File file = new File(this.currentphoto.getPath());
+						File file = new File(this.currentPhoto.getPath());
 						if (file.exists())
 						{
 							file.delete();
 						}
-						this.currentphoto = null;
+						this.currentPhoto = null;
 					}
 					
 					//填充临时照片为当前照片
@@ -157,25 +264,24 @@ public class NewAudioMessageNextActivity extends Activity {
 					{
 						ex.printStackTrace();
 					}
-					this.currentphoto = this.tmpphoto;
+					this.currentPhoto = this.tmpphoto;
 					this.tmpphoto = null;
 					this.currentAction = 0;
 				}
 			}
 		}
-
 	}
 
-	private void cropImageUri(Uri uri) {
+	private void cropImageUri(Uri inUri, Uri outUri) {
 		Intent intent = new Intent("com.android.camera.action.CROP");
-		intent.setDataAndType(uri, "image/*");
+		intent.setDataAndType(inUri, "image/*");
 		intent.putExtra("crop", "true");
 		intent.putExtra("aspectX", this.rateWidth);
 		intent.putExtra("aspectY", this.rateHeight);
 		/*intent.putExtra("outputX", this.cropWidth);
 		intent.putExtra("outputY", this.cropHeight);*/
 		intent.putExtra("scale", true);
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, outUri);
 		intent.putExtra("return-data", false);
 		intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 		intent.putExtra("noFaceDetection", true);
@@ -226,6 +332,66 @@ public class NewAudioMessageNextActivity extends Activity {
 		fileName.append(TGUtil.getFilePathProperty("imagePath"));
 		fileName.append("/").append(this.userName).append("/").append(new Date().getTime()).append(".jpg");
 		return Uri.fromFile(new File(fileName.toString()));
+	}
+	
+	/**
+	 * 改变音频状态
+	 */
+	private void toggleAudio()
+	{
+		//播放
+		if (this.audioPlayer == null)
+		{
+			String audioFile = this.getIntent().getExtras().getString(NewAudioMessageActivity.INTENT_AUDIO_FILE);
+			if (!TGUtil.isEmpty(audioFile))
+			{
+				this.audioPlayer = new MediaPlayer();
+				try {
+					this.audioBtn.setBackgroundResource(R.drawable.mic_next_pause);
+	        	
+					audioPlayer.setDataSource(audioFile);
+					audioPlayer.setOnCompletionListener(audioCompletionListener);
+					audioPlayer.prepare();
+					audioPlayer.start();
+				} catch (IOException e) {
+					Log.e("ThanksBook", "播放 prepare() 失败");
+					e.printStackTrace();
+				}
+			}
+		}
+		//暂停
+		else if (this.audioPlayer!=null && this.audioPlayer.isPlaying())
+		{
+        	audioBtn.setBackgroundResource(R.drawable.mic_next_play);
+        	
+        	this.audioPlayer.pause();
+		}
+		//继续
+		else
+		{
+        	audioBtn.setBackgroundResource(R.drawable.mic_next_pause);
+        	
+        	this.audioPlayer.start();
+		}
+	}
+	
+	private OnCompletionListener audioCompletionListener = new OnCompletionListener() {
+		@Override
+		public void onCompletion(android.media.MediaPlayer arg0) 
+		{
+        	audioBtn.setBackgroundResource(R.drawable.mic_next_play);
+        	
+        	releasePalyer();
+		}
+	};
+	
+	private synchronized void releasePalyer()
+	{
+		if (audioPlayer!= null && audioPlayer.isPlaying())
+		{
+			audioPlayer.release();
+			audioPlayer = null;
+		}
 	}
 
 }

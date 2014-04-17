@@ -27,6 +27,9 @@ import com.zte.thanksbook.util.PreferenceUtil;
 import com.zte.thanksbook.util.TGUtil;
 
 public class NewAudioMessageActivity extends Activity {
+	
+	public static final String INTENT_AUDIO_FILE = "intent_audio_file";
+	
 	//是否按住录音按钮
 	private boolean isTouching = false;
 	
@@ -37,6 +40,11 @@ public class NewAudioMessageActivity extends Activity {
 	private Button micBtn;
 	
 	private TextView micTip;
+	
+	/**
+	 * 下一步的Intent
+	 */
+	private Intent nextIntent = null;
 	
 	/**
 	 * 录音工具实例
@@ -143,9 +151,13 @@ public class NewAudioMessageActivity extends Activity {
 				{
 					releasePalyer();
 					
-					Intent nextIntent = new Intent(NewAudioMessageActivity.this,NewAudioMessageNextActivity.class);
-					nextIntent.putExtra("recordFile", audioRecorder.getFileName());
-					startActivity(nextIntent);
+					if (nextIntent == null)
+					{
+						Log.v("ThanksBook", "下一步intent初始化");
+						nextIntent = new Intent(NewAudioMessageActivity.this, NewAudioMessageNextActivity.class);
+					}
+					nextIntent.putExtra(INTENT_AUDIO_FILE, audioRecorder.getFileName());
+					startActivityForResult(nextIntent, 0);
 				}
 				else
 				{
@@ -356,6 +368,20 @@ public class NewAudioMessageActivity extends Activity {
 		{
 			audioPlayer.release();
 			audioPlayer = null;
+		}
+	}
+
+	//下一步返回的Intent
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.v("ThanksBook", "下一步返回：" + requestCode + " " + resultCode);
+		if (resultCode == Activity.RESULT_OK)
+		{
+			if (requestCode == 0)
+			{
+				this.nextIntent = data;
+				Log.v("ThanksBook", this.nextIntent.getExtras().getString(NewAudioMessageNextActivity.INTENT_PHOTO_URI));
+			}
 		}
 	}
 

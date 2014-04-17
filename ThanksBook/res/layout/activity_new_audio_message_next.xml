@@ -83,11 +83,11 @@
             android:textColorHint="#cccccc" />
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/thanks_nav"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="horizontal" >
-    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/audio_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+    </LinearLayout>
 
 </RelativeLayout>

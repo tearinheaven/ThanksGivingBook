@@ -87,13 +87,19 @@ public class ThreeButtonShadowFragment extends Fragment {
 							ft.remove(ThreeButtonShadowFragment.this).commit();
 						}
 					});
+			
+			//点击灰色方块，取消当前蒙板
+			v.findViewById(R.id.shadow_btn_destory).setOnClickListener(
+					new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							FragmentTransaction ft = ThreeButtonShadowFragment.this.getActivity()
+									.getFragmentManager().beginTransaction();
+							ft.remove(ThreeButtonShadowFragment.this).commit();
+						}
+					});
 		}
 
 		return v;
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
 	}
 }
