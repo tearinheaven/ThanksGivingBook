@@ -9,15 +9,11 @@ import com.zte.thanksbook.entity.User;
 
 public class UserDao {
 	
-    public static final String USER_TABLE_NAME = "ts_user";
-    public static final String USER_TABLE_CREATE =
-                "CREATE TABLE " + USER_TABLE_NAME + " (" +
-                " user_id integer primary key, " +
-                " user_name text, user_email text, user_signature text, last_update_date TimeStamp NOT NULL );";
+	private static final String TABLE_NAME_USER = "ts_user";
 	
 	public static void addUser(Context context, User user)
 	{
-		SQLiteHelper dbHelper = new SQLiteHelper(context,new String[]{USER_TABLE_CREATE});
+		SQLiteHelper dbHelper = new SQLiteHelper(context);
 		
 		SQLiteDatabase database = null;  
         try {  
@@ -28,7 +24,7 @@ public class UserDao {
             cv.put("user_name", user.getUserName());             
             cv.put("user_signature", user.getUserSignature());             
             cv.put("last_update_date", user.getLastUpdateDateString());  
-            database.insertWithOnConflict(USER_TABLE_NAME, null, cv, SQLiteDatabase.CONFLICT_REPLACE);
+            database.insertWithOnConflict(TABLE_NAME_USER, null, cv, SQLiteDatabase.CONFLICT_REPLACE);
         } catch (Exception e) {  
             e.printStackTrace();  
         } finally {  

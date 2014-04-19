@@ -24,17 +24,10 @@ public class ThanksMessageDAO {
 	private SQLiteHelper helper;
 	private SQLiteDatabase db;
 	private Context context;
-	
-	private static final String projection[] = {};
-	
+	private String[] projection = {};
 	private static final String TABLE_NAME_MSG = "ts_thanks_message";
 	private static final String TABLE_NAME_IMG = "ts_thanks_img";
-	private static final String CREATE_THANKS_MESSAGE = "create table "+TABLE_NAME_MSG+"(" +
-			"id INTEGER PRIMARY KEY AUTOINCREMENT,"+"message_text TEXT,"+"enable_flag char(1)," +"status varchar(10)," +
-			"create_by INTEGER,thank_to TEXT,create_date DATETIME,last_update_date DATETIME);";
-	private static final String CREATE_THANKS_IMG = "create table "+TABLE_NAME_IMG+"(" +
-			"id INTEGER PRIMARY KEY AUTOINCREMENT,"+"belong_to INTEGER,"+"original_img blob," +"thumbnail blob," +
-			"enable_flag char(1),create_date DATETIME,last_update_date DATETIME);";
+	
 	private static final String INSERT_MESSAGE = "insert into "+TABLE_NAME_MSG+" (message_text,enable_flag,status,create_by,thank_to,"
 			 									+"create_date,last_update_date) values (?,'Y',?,?,?,sysdate,sysdate)";
 	private static final String INSERT_IMG = "insert into "+TABLE_NAME_IMG+"(belong_to,original_img,thumbnail,enable_flag,"
@@ -42,7 +35,7 @@ public class ThanksMessageDAO {
 	
 	public ThanksMessageDAO(Context context)
 	{
-		helper = new SQLiteHelper(null,new String[]{CREATE_THANKS_MESSAGE,CREATE_THANKS_IMG});
+		helper = new SQLiteHelper(context);
 		db = helper.getWritableDatabase();
 	}
 	

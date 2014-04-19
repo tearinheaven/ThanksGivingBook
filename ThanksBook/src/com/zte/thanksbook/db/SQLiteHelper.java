@@ -10,33 +10,45 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	
 	private static final int DATABASE_VERSION = 1;
 	
-	private String[] tableCreateSql;
-
-    public SQLiteHelper(Context context,String[] tableCreateSql) {
+	//table names
+	private static final String TABLE_NAME_MSG = "ts_thanks_message";
+	private static final String TABLE_NAME_IMG = "ts_thanks_img";
+	private static final String TABLE_NAME_USER = "ts_user";
+	
+	//create tables
+	private static final String CREATE_THANKS_MESSAGE = "create table "+TABLE_NAME_MSG+"(" +
+			"id INTEGER PRIMARY KEY AUTOINCREMENT,message_text TEXT,enable_flag char(1),status varchar(10)," +
+			"create_by INTEGER,thank_to TEXT,create_date DATETIME,last_update_date DATETIME);";
+	private static final String CREATE_THANKS_IMG = "create table "+TABLE_NAME_IMG+"(" +
+			"id INTEGER PRIMARY KEY AUTOINCREMENT,belong_to INTEGER,original_img blob,thumbnail blob," +
+			"enable_flag char(1),create_date DATETIME,last_update_date DATETIME);";
+	private static final String USER_TABLE_CREATE =
+             "CREATE TABLE " + TABLE_NAME_USER + " (" +
+             " user_id integer primary key, " +
+             " user_name text, user_email text, user_signature text, last_update_date TimeStamp NOT NULL );";
+	
+	//drop tables
+	private static final String DROP_THANKS_MESSAGE = "DROP TABLE IF EXISTS "+TABLE_NAME_MSG;
+	private static final String DROP_THANKS_IMG = "DROP TABLE IF EXISTS "+TABLE_NAME_IMG;
+	private static final String DROP_USER = "DROP TABLE IF EXISTS "+TABLE_NAME_USER;
+	
+    public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.tableCreateSql = tableCreateSql;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-    	for(String createSql:tableCreateSql)
-    	{
-    		db.execSQL(createSql);
-    	}
-        /*String[] names = MainActivity.resources.getStringArray(R.array.activity_names);
-        String[] types = MainActivity.resources.getStringArray(R.array.activity_types);
-        for (int i=0; i<names.length; i++)
-        {
-            db.execSQL("insert into activitys(activity_id, activity_name, activity_type) " +
-            		"values(" + i + ", '" + names[i] + "'," + types[i] + ")");
-        }*/
+    	db.execSQL(CREATE_THANKS_MESSAGE);
+    	db.execSQL(CREATE_THANKS_IMG);
+    	db.execSQL(USER_TABLE_CREATE);
     }
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// TODO Auto-generated method stub
-        /*String sql = "alter table person add sex varchar(8)";  
-        db.execSQL(sql); */
+		db.execSQL(DROP_THANKS_MESSAGE);
+		db.execSQL(DROP_THANKS_IMG);
+		db.execSQL(DROP_USER);
+		this.onCreate(db);
 	}
 
 }
