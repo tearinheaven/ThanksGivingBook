@@ -40,17 +40,31 @@
         android:text="@string/guide3_str4"
         android:textSize="16sp"
 	    />
-	
-    <Button 
-        android:id="@+id/sign"
-        android:layout_width="150dp"
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:layout_marginTop="40dp"
+	    >
+	    <Button 
+        android:id="@+id/login"
+        android:layout_width="115dp"
         android:layout_height="50dp"
-        android:text="注册"
-        android:layout_gravity="center_horizontal"
+        android:text="登陆"
         android:textColor="#FFF"
         android:textSize="20sp"
-        android:layout_marginTop="40dp"
+        android:background="#4bccef"
+        android:layout_marginRight="30dp"
+        />
+	    <Button 
+        android:id="@+id/sign"
+        android:layout_width="115dp"
+        android:layout_height="50dp"
+        android:text="注册"
+        android:textColor="#FFF"
+        android:textSize="20sp"
         android:background="#4bccef"
         />
+	</LinearLayout>
     
 </LinearLayout>
