@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.zte.thanksbook.entity.ThanksMessageEntity;
 
@@ -28,15 +29,16 @@ public class ThanksMessageDAO {
 	private static final String TABLE_NAME_MSG = "ts_thanks_message";
 	private static final String TABLE_NAME_IMG = "ts_thanks_img";
 	
-	private static final String INSERT_MESSAGE = "insert into "+TABLE_NAME_MSG+" (message_text,enable_flag,status,create_by,thank_to,"
-			 									+"create_date,last_update_date) values (?,'Y',?,?,?,sysdate,sysdate)";
-	private static final String INSERT_IMG = "insert into "+TABLE_NAME_IMG+"(belong_to,original_img,thumbnail,enable_flag,"
-			 								+"create_date,last_update_date) values (?,?,?,'Y',sysdate,sysdate)";
+	private static final String INSERT_MESSAGE = "insert into "+TABLE_NAME_MSG+" (message_text,enable_flag,status,create_by,thank_to)"
+			 									+" values (?,'Y',?,?,?)";
+	private static final String INSERT_IMG = "insert into "+TABLE_NAME_IMG+"(belong_to,original_img,thumbnail,enable_flag)"
+			 								+" values (?,?,?,'Y')";
 	
 	public ThanksMessageDAO(Context context)
 	{
 		helper = new SQLiteHelper(context);
 		db = helper.getWritableDatabase();
+		Log.i("debug", "--------------------");
 	}
 	
 	/**
@@ -52,6 +54,7 @@ public class ThanksMessageDAO {
 		stat = addText(msg);
 		Long msgId = stat.executeInsert();
 		
+		Log.i("-------id----------", msgId+"");
 		List<Uri> imgs =msg.getImgs();
 		if(imgs!=null&&imgs.size()>0)
 		{

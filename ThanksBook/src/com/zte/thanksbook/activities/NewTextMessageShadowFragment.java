@@ -4,16 +4,23 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zte.thanksbook.R;
+import com.zte.thanksbook.db.ThanksMessageDAO;
+import com.zte.thanksbook.entity.ThanksMessageEntity;
 
 /**
  * 新建感恩后退按钮页面
@@ -22,12 +29,20 @@ import com.zte.thanksbook.R;
  */
 public class NewTextMessageShadowFragment extends Fragment implements OnClickListener{
 
-	private Activity activity = getActivity();
+	private Context context;
 	private List<Uri> photos;
+	private String date;
+	private String thanksTo;
+	private String msg;
 	
-	public NewTextMessageShadowFragment(List<Uri> photos)
+	private static final int TOAST_TIME_SECOND = 2*1000;
+	
+	public NewTextMessageShadowFragment(String date,String thanksTo,String msg,List<Uri> photos)
 	{
 		this.photos = photos;
+		this.date = date;
+		this.thanksTo = thanksTo;
+		this.msg = msg;
 	}
 	
 	@Override
@@ -61,12 +76,20 @@ public class NewTextMessageShadowFragment extends Fragment implements OnClickLis
 	
 	private void save()
 	{
-		TextView date = (TextView)activity.findViewById(R.id.dateText);
-		String dateStr = date.getText().toString();
-		EditText msg = (EditText)activity.findViewById(R.id.msg_text);
-		String msgStr = msg.getText().toString();
-		
-		
+		ThanksMessageEntity msgEntity = new ThanksMessageEntity();
+		msgEntity.setImgs(photos);
+		msgEntity.setCreateBy(1l);
+		msgEntity.setMessageText(msg);
+		msgEntity.setThanksTo("");
+		context = this.getActivity();
+		SaveMsgTask task = new SaveMsgTask();
+		task.execute(msgEntity);
+		Activity fatherActivity = (Activity)context;
+		FragmentManager manager = fatherActivity.getFragmentManager();
+		FragmentTransaction tran = manager.beginTransaction();
+		Fragment fragment = manager.findFragmentById(R.id.new_text_message);
+		tran.remove(fragment);
+		tran.commit();
 	}
 	
 	private void unsave()
@@ -79,4 +102,36 @@ public class NewTextMessageShadowFragment extends Fragment implements OnClickLis
 		
 	}
 	
+	/**
+	 * 异步保存草稿类
+	 * @author huangjianxin
+	 *
+	 */
+	class SaveMsgTask extends AsyncTask<ThanksMessageEntity, Void, Boolean>
+	{
+		@Override
+		protected Boolean doInBackground(ThanksMessageEntity... msgs) {
+			boolean result = false;
+			ThanksMessageEntity msg = msgs[0];
+			ThanksMessageDAO msgDAO = new ThanksMessageDAO(context);
+			result = msgDAO.addThanksMessage(msg);
+			Log.i("save", "saveSuccess");
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if(result)
+			{
+				Toast.makeText(context, "保存成功", TOAST_TIME_SECOND).show();
+			}else
+			{
+				Toast.makeText(context, "保存失败", TOAST_TIME_SECOND).show();
+			}
+		}
+	}
+	
 }
+
+
+

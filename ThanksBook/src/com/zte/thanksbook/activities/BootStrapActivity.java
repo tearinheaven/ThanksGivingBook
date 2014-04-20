@@ -46,7 +46,10 @@ public class BootStrapActivity extends Activity {
 		this.getActionBar().hide();
 		isFirstUse = PreferenceUtil.getBooleanPre(this, PreferenceUtil.IS_FIRST_USE, true);
 		String userName = PreferenceUtil.getStringPre(this, PreferenceUtil.USER_NAME, null);
-		Log.v("ThanksBook", userName);
+		if(!isFirstUse)
+		{
+			Log.v("ThanksBook", userName);
+		}
 		if(!isFirstUse && userName!=null)
 		{
 			handler.sendEmptyMessageDelayed(TO_MAIN_PAGE, DELAY_MILLS);

@@ -3,6 +3,7 @@ package com.zte.thanksbook.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 	
@@ -18,10 +19,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	//create tables
 	private static final String CREATE_THANKS_MESSAGE = "create table "+TABLE_NAME_MSG+"(" +
 			"id INTEGER PRIMARY KEY AUTOINCREMENT,message_text TEXT,enable_flag char(1),status varchar(10)," +
-			"create_by INTEGER,thank_to TEXT,create_date DATETIME,last_update_date DATETIME);";
+			"create_by INTEGER,thank_to TEXT,create_date TimeStamp NOT NULL DEFAULT (datetime('now','localtime')),"+
+			"last_update_date TimeStamp NOT NULL DEFAULT (datetime('now','localtime')));";
 	private static final String CREATE_THANKS_IMG = "create table "+TABLE_NAME_IMG+"(" +
 			"id INTEGER PRIMARY KEY AUTOINCREMENT,belong_to INTEGER,original_img blob,thumbnail blob," +
-			"enable_flag char(1),create_date DATETIME,last_update_date DATETIME);";
+			"enable_flag char(1),create_date TimeStamp NOT NULL DEFAULT (datetime('now','localtime')),"+
+			"last_update_date TimeStamp NOT NULL DEFAULT (datetime('now','localtime')));";
 	private static final String USER_TABLE_CREATE =
              "CREATE TABLE " + TABLE_NAME_USER + " (" +
              " user_id integer primary key, " +
@@ -38,9 +41,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+    	Log.i("start", "crate tables");
     	db.execSQL(CREATE_THANKS_MESSAGE);
     	db.execSQL(CREATE_THANKS_IMG);
     	db.execSQL(USER_TABLE_CREATE);
+    	Log.i("end", "crate tables");
     }
 
 	@Override

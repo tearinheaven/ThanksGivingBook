@@ -12,7 +12,7 @@
 	    <RelativeLayout
 	        android:id="@+id/new_top"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="60dp"
 			android:orientation="horizontal"
 			android:padding="20dp"
 			>
@@ -32,7 +32,7 @@
 	        />
 	    </RelativeLayout>
 	    <ScrollView 
-		    android:layout_height="fill_parent"
+		    android:layout_height="50dp"
 		    android:layout_width="fill_parent"
 		    android:fillViewport="true"
 		    android:layout_weight="1"
@@ -40,9 +40,9 @@
 		    <EditText 
 		        android:id="@+id/msg_text"
 		        android:layout_width="fill_parent"
-		        android:layout_height="fill_parent"
 		        android:hint="在这里记录生活中的小美好"
 		        android:textSize="12dp"
+		        android:layout_height="30dp"
 		        android:imeOptions="flagNoExtractUi" 
 		        />
 	   	</ScrollView>

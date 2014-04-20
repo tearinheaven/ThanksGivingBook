@@ -110,7 +110,10 @@ public class NewTextMessageActivity extends Activity implements OnClickListener 
 				//boolean needSave = !"".equals(thanksMsg.getText().toString().trim())&&(photos!=null&&photos.size()>0);
 				//if(true)
 				//{
-					NewTextMessageShadowFragment fragment = new NewTextMessageShadowFragment(photos);
+					String date = dateText.getText().toString();
+					String msg = thanksMsg.getText().toString();
+					String thanksTo = "";
+					NewTextMessageShadowFragment fragment = new NewTextMessageShadowFragment(date,thanksTo,msg,photos);
 					FragmentManager manager = getFragmentManager();
 					FragmentTransaction tran = manager.beginTransaction();
 					tran.replace(R.id.new_text_message, fragment);
