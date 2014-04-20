@@ -45,10 +45,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL(DROP_THANKS_MESSAGE);
+		//这样每次都会把所有表删除，重新创建，要判断新老版本的差别
+		/*db.execSQL(DROP_THANKS_MESSAGE);
 		db.execSQL(DROP_THANKS_IMG);
 		db.execSQL(DROP_USER);
-		this.onCreate(db);
+		this.onCreate(db);*/
 	}
 
 }
