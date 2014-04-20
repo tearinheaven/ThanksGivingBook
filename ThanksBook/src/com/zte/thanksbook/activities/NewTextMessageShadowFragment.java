@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -94,12 +95,21 @@ public class NewTextMessageShadowFragment extends Fragment implements OnClickLis
 	
 	private void unsave()
 	{
-		
+		context = this.getActivity();
+		Activity fatherActivity = (Activity)context;
+		Intent intent = new Intent(fatherActivity,MainActivity.class);
+		fatherActivity.startActivity(intent);
 	}
 	
 	private void cancel()
 	{
-		
+		context = this.getActivity();
+		Activity fatherActivity = (Activity)context;
+		FragmentManager manager = fatherActivity.getFragmentManager();
+		FragmentTransaction tran = manager.beginTransaction();
+		Fragment fragment = manager.findFragmentById(R.id.new_text_message);
+		tran.remove(fragment);
+		tran.commit();
 	}
 	
 	/**
