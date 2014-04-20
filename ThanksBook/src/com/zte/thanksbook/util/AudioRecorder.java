@@ -309,6 +309,13 @@ public class AudioRecorder {
 		
 		StringBuffer fileName = new StringBuffer();
 		fileName.append(TGUtil.getFilePathProperty("audioPath"));
+		fileName.append("/").append(this.userName);
+		File file = new File(fileName.toString());
+		if (!file.exists())
+		{
+			file.mkdir();
+		}
+		
 		fileName.append("/").append(String.valueOf(this.currentStartTime)).append(".3gp");
 		
 		return fileName.toString();

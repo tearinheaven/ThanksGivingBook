@@ -8,11 +8,16 @@
         android:minSdkVersion="11"
         android:targetSdkVersion="18" />
 
-    <uses-permission android:name="android.permission.CAMERA" /><!-- 摄像头 -->
-    <uses-permission android:name="android.permission.INTERNET" /><!-- 互联网访问 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /><!-- 获取网络访问状态 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /><!-- 读写SD卡 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" /><!-- 录音 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+ <!-- 摄像头 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+ <!-- 互联网访问 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+ <!-- 获取网络访问状态 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+ <!-- 读写SD卡 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+ <!-- 录音 -->
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -43,7 +48,7 @@
         <activity
             android:name="com.zte.thanksbook.activities.NewVideoMessageActivity"
             android:label="@string/title_activity_new_video_message" >
-        </activity>
+        </activity>
         -->
         <activity
             android:name="com.zte.thanksbook.activities.BootStrapActivity"
@@ -70,6 +75,15 @@
             android:name="com.zte.thanksbook.activities.NewAudioMessageActivity"
             android:label="@string/title_activity_new_audio_message"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.zte.thanksbook.activities.NewAudioMessageNextActivity"
+            android:label="@string/title_activity_new_audio_message_next_activity"
+            android:parentActivityName="com.zte.thanksbook.activities.NewAudioMessageActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.zte.thanksbook.activities.NewAudioMessageActivity" />
         </activity>
     </application>
 

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 
 import com.zte.thanksbook.R;
@@ -44,7 +45,9 @@ public class BootStrapActivity extends Activity {
 		setContentView(R.layout.activity_boot_strap);
 		this.getActionBar().hide();
 		isFirstUse = PreferenceUtil.getBooleanPre(this, PreferenceUtil.IS_FIRST_USE, true);
-		if(!isFirstUse)
+		String userName = PreferenceUtil.getStringPre(this, PreferenceUtil.USER_NAME, null);
+		Log.v("ThanksBook", userName);
+		if(!isFirstUse && userName!=null)
 		{
 			handler.sendEmptyMessageDelayed(TO_MAIN_PAGE, DELAY_MILLS);
 		}else
