@@ -17,15 +17,30 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zte.thanksbook.R;
 
 public class PhotoShowFragment extends Fragment{
 
 	private List<Uri> photos;
 	
+	private ImageLoader imageLoader = ImageLoader.getInstance();
+	
+	private DisplayImageOptions options;
+	
 	public PhotoShowFragment(List<Uri> photos)
 	{
 		this.photos = photos;
+		options = new DisplayImageOptions.Builder()
+		//.showImageOnLoading(R.drawable.ic_stub)
+		//.showImageForEmptyUri(R.drawable.ic_empty)
+		//.showImageOnFail(R.drawable.ic_error)
+		.cacheInMemory(true)
+		.cacheOnDisc(false)
+		.considerExifParams(true)
+		.bitmapConfig(Bitmap.Config.RGB_565)
+		.build();
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,75 +51,50 @@ public class PhotoShowFragment extends Fragment{
 		gridView.setAdapter(new MyPhotoAdapter(getActivity(),photos));
 		return layout;
 	}
-
-}
-
-class MyPhotoAdapter extends BaseAdapter
-{
-	private Context context;
-	private List<Uri> photos;
 	
-	public MyPhotoAdapter(Context context,List<Uri> maps)
+	class MyPhotoAdapter extends BaseAdapter
 	{
-		this.context = context;
-		this.photos =maps; 
-	}
-	
-	@Override
-	public int getCount() {
-		return photos.size();
-	}
-
-	@Override
-	public Object getItem(int arg0) {
-		return null;
-	}
-
-	@Override
-	public long getItemId(int arg0) {
-		return 0;
-	}
-
-	@Override
-	public View getView(int index, View convertView, ViewGroup parent) {
-		ImageView imageView;
-        if (convertView == null) {  
-            imageView = new ImageView(context);
-            imageView.setLayoutParams(new GridView.LayoutParams(400, 400));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
-        } else {
-            imageView = (ImageView) convertView;
-        }
-
-        imageView.setImageBitmap(getCompressBitmap(photos.get(index)));
-        return imageView;
-	}
-	
-	private Bitmap getCompressBitmap(Uri photo)
-	{
-		Bitmap compressPhoto = null;
-		final BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeFile(photo.getPath(), options);
-		options.inSampleSize = calculateInSampleSize(options,400,400);	//缩放值后续计算
-		options.inJustDecodeBounds = false;
-		compressPhoto=  BitmapFactory.decodeFile(photo.getPath(), options);	
-		return compressPhoto;
-	}
-	
-	public static int calculateInSampleSize(BitmapFactory.Options options,int reqWidth, int reqHeight)
-	{
-		final int height = options.outHeight;//获取图片的高
-		final int width = options.outWidth;//获取图片的框
-		int inSampleSize = 4;
-		if (height > reqHeight || width > reqWidth)
+		private Context context;
+		private List<Uri> photos;
+		
+		public MyPhotoAdapter(Context context,List<Uri> maps)
 		{
-			final int heightRatio = Math.round((float) height/ (float) reqHeight);
-			final int widthRatio = Math.round((float) width / (float) reqWidth);
-			inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+			this.context = context;
+			this.photos =maps; 
 		}
-		Log.i("size",""+inSampleSize);
-		return inSampleSize;
+		
+		@Override
+		public int getCount() {
+			return photos.size();
+		}
+
+		@Override
+		public Object getItem(int arg0) {
+			return null;
+		}
+
+		@Override
+		public long getItemId(int arg0) {
+			return 0;
+		}
+
+		@Override
+		public View getView(int index, View convertView, ViewGroup parent) {
+			ImageView imageView;
+	        if (convertView == null) {  
+	            imageView = new ImageView(context);
+	            imageView.setLayoutParams(new GridView.LayoutParams(120, 120));
+	            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+	            imageView.setPadding(5, 5, 5, 5);
+	        } else {
+	            imageView = (ImageView) convertView;
+	        }
+	        Log.i("--------------------",photos.get(index).getScheme());
+	        imageLoader.displayImage("file:"+photos.get(index).getSchemeSpecificPart(), imageView, options, null);
+	        return imageView;
+		}
+		
 	}
 }
+
+
