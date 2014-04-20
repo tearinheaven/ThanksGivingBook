@@ -36,9 +36,9 @@ public class ThanksMessageDAO {
 	
 	public ThanksMessageDAO(Context context)
 	{
+		this.context = context;
 		helper = new SQLiteHelper(context);
 		db = helper.getWritableDatabase();
-		Log.i("debug", "--------------------");
 	}
 	
 	/**
@@ -54,7 +54,6 @@ public class ThanksMessageDAO {
 		stat = addText(msg);
 		Long msgId = stat.executeInsert();
 		
-		Log.i("-------id----------", msgId+"");
 		List<Uri> imgs =msg.getImgs();
 		if(imgs!=null&&imgs.size()>0)
 		{
@@ -120,10 +119,11 @@ public class ThanksMessageDAO {
 		stat.clearBindings();
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		Bitmap map = MediaStore.Images.Media.getBitmap(context.getContentResolver(), img);
-		map.compress(Bitmap.CompressFormat.PNG, 100, os);
+		map.compress(Bitmap.CompressFormat.PNG, 80, os);
+		byte[] imgByte = os.toByteArray();
 		stat.bindLong(1, msgId);
-		stat.bindBlob(2, os.toByteArray());
-		stat.bindBlob(3,os.toByteArray());//ËõÂÔÍ¼´ý´¦Àí
+		stat.bindBlob(2, imgByte);
+		stat.bindBlob(3, imgByte);//ËõÂÔÍ¼´ý´¦Àí
 		return stat;
 	}
 	
