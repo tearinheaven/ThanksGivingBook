@@ -25,12 +25,12 @@ public class ThanksMessageDAO {
 	private SQLiteHelper helper;
 	private SQLiteDatabase db;
 	private Context context;
-	private String[] projection = {};
+	private String[] projection = {"id","msg_type","message_text","create_date"};
 	private static final String TABLE_NAME_MSG = "ts_thanks_message";
 	private static final String TABLE_NAME_IMG = "ts_thanks_img";
 	
-	private static final String INSERT_MESSAGE = "insert into "+TABLE_NAME_MSG+" (message_text,enable_flag,status,create_by,thank_to)"
-			 									+" values (?,'Y',?,?,?)";
+	private static final String INSERT_MESSAGE = "insert into "+TABLE_NAME_MSG+" (message_text,enable_flag,status,create_by,thank_to,msg_type)"
+			 									+" values (?,'Y',?,?,?,?)";
 	private static final String INSERT_IMG = "insert into "+TABLE_NAME_IMG+"(belong_to,original_img,thumbnail,enable_flag)"
 			 								+" values (?,?,?,'Y')";
 	
@@ -103,6 +103,7 @@ public class ThanksMessageDAO {
 		stat.bindString(2, "unSYN");
 		stat.bindLong(3, text.getCreateBy());
 		stat.bindString(4, text.getThanksTo());
+		stat.bindString(5, text.getMessageType());
 		return stat;
 	}
 	
@@ -147,7 +148,7 @@ public class ThanksMessageDAO {
 	 */
 	public Cursor queryThanksMessages()
 	{
-		return this.db.query("thanks_message", projection, null, null, null, null, "create_date desc");
+		return this.db.query(TABLE_NAME_MSG, projection, null, null, null, null, "create_date desc");
 	}
 
 }

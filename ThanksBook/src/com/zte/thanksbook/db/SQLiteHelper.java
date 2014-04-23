@@ -20,7 +20,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	private static final String CREATE_THANKS_MESSAGE = "create table "+TABLE_NAME_MSG+"(" +
 			"id INTEGER PRIMARY KEY AUTOINCREMENT,message_text TEXT,enable_flag char(1),status varchar(10)," +
 			"create_by INTEGER,thank_to TEXT,create_date TimeStamp NOT NULL DEFAULT (datetime('now','localtime')),"+
-			"last_update_date TimeStamp NOT NULL DEFAULT (datetime('now','localtime')));";
+			"last_update_date TimeStamp NOT NULL DEFAULT (datetime('now','localtime')),msg_type varchar(10));";
 	private static final String CREATE_THANKS_IMG = "create table "+TABLE_NAME_IMG+"(" +
 			"id INTEGER PRIMARY KEY AUTOINCREMENT,belong_to INTEGER,original_img blob,thumbnail blob," +
 			"enable_flag char(1),create_date TimeStamp NOT NULL DEFAULT (datetime('now','localtime')),"+

@@ -82,9 +82,13 @@ public class NewTextMessageShadowFragment extends Fragment implements OnClickLis
 		msgEntity.setCreateBy(1l);
 		msgEntity.setMessageText(msg);
 		msgEntity.setThanksTo("");
+		msgEntity.setMessageType("text");
 		context = this.getActivity();
 		SaveMsgTask task = new SaveMsgTask();
 		task.execute(msgEntity);
+		/*ThanksMessageDAO msgDAO = new ThanksMessageDAO(context);
+		msgDAO.addThanksMessage(msgEntity);*/
+		
 		Activity fatherActivity = (Activity)context;
 		FragmentManager manager = fatherActivity.getFragmentManager();
 		FragmentTransaction tran = manager.beginTransaction();

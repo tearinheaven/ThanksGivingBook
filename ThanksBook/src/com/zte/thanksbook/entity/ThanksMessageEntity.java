@@ -12,6 +12,8 @@ public class ThanksMessageEntity {
 	 */
 	private int id;
 	
+	private String messageType;
+	
 	/**
 	 * ¸Ğ¶÷ÎÄ×Ö
 	 */
@@ -50,6 +52,12 @@ public class ThanksMessageEntity {
 	}
 	public int getId() {
 		return id;
+	}
+	public String getMessageType() {
+		return messageType;
+	}
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
 	}
 	public void setId(int id) {
 		this.id = id;
