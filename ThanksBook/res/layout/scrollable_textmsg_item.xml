@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/border_corner_w"
     android:orientation="vertical" >
     
     <RelativeLayout 
@@ -13,6 +15,8 @@
 		    android:id="@+id/create_date"
 		    android:layout_height="wrap_content"
 		    android:layout_width="wrap_content"
+		    android:textColor="#808080"
+		    android:textSize="7dp"
 		    android:layout_alignParentLeft="true"
 		    android:layout_alignParentTop="true"
 	    />
@@ -29,16 +33,25 @@
 	<TextView
 	    android:id="@+id/message_text"
 	    android:layout_height="wrap_content"
+	    android:textSize="8dp"
+	    android:textColor="#333333"
 	    android:layout_width="fill_parent"
 	    />
 	<LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
+	    android:paddingLeft="30dp"
 	    >
 	    <GridView 
 	        android:id="@+id/imgs"
-	        android:layout_width="match_parent"
-	   		android:layout_height="match_parent"
+	        android:numColumns="2"
+	        android:layout_width="fill_parent" 
+		    android:layout_height="fill_parent"
+		    android:verticalSpacing="10dp"
+		    android:horizontalSpacing="10dp"
+		    android:stretchMode="columnWidth"
+		    android:columnWidth="400dp"
+		    android:gravity="center"
 	        ></GridView>
 	</LinearLayout>
 </LinearLayout>

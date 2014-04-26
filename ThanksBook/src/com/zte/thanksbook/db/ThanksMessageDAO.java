@@ -2,6 +2,7 @@ package com.zte.thanksbook.db;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -9,9 +10,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import com.zte.thanksbook.entity.ThanksMessageEntity;
 
@@ -118,13 +119,10 @@ public class ThanksMessageDAO {
 	private SQLiteStatement addImg (SQLiteStatement stat,Long msgId,Uri img)  throws IOException
 	{
 		stat.clearBindings();
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		Bitmap map = MediaStore.Images.Media.getBitmap(context.getContentResolver(), img);
-		map.compress(Bitmap.CompressFormat.PNG, 80, os);
-		byte[] imgByte = os.toByteArray();
+		String imgPath = img.getSchemeSpecificPart();
 		stat.bindLong(1, msgId);
-		stat.bindBlob(2, imgByte);
-		stat.bindBlob(3, imgByte);//缩略图待处理
+		stat.bindString(2, imgPath);
+		stat.bindString(3, imgPath);//缩略图待处理
 		return stat;
 	}
 	
@@ -150,5 +148,35 @@ public class ThanksMessageDAO {
 	{
 		return this.db.query(TABLE_NAME_MSG, projection, null, null, null, null, "create_date desc");
 	}
+	
+	/**
+	 * 获取特定感恩信息的图片
+	 * @param msgId
+	 * @return
+	 */
+	public List<Long> queryImagesByMsgId(long msgId)
+	{
+		List<Long> images = new ArrayList<Long>();
+		Cursor imgIds = this.db.rawQuery("select id from "+ TABLE_NAME_IMG +" img where img.belong_to = ?", new String[]{msgId+""});
+		while(imgIds.moveToNext())
+		{
+			Long imgId = imgIds.getLong(imgIds.getColumnIndex("id"));
+			images.add(imgId);
+		}
+		return images;
+	}
+	
+	public String queryThumbnailById(long imgId)
+	{
+		String imgPath = null;
+		Cursor img = this.db.rawQuery("select thumbnail from "+TABLE_NAME_IMG+" img where img.id = ?", new String[]{imgId+""});
+		if(img.moveToFirst())
+		{
+			imgPath = img.getString(img.getColumnIndex("thumbnail"));
+		}
+		return imgPath;
+	}
+	
+	
 
 }

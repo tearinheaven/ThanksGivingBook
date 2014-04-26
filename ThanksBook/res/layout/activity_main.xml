@@ -9,6 +9,10 @@
 	    android:id="@+id/thanks_list"
 	    android:layout_height="wrap_content"
 	    android:layout_width="match_parent"
+	    android:background="#ECECEC"
+	    android:padding="10dp"
+	    android:divider="#ECECEC"
+	    android:dividerHeight="10dp"
 	    >
     </ListView>
     

@@ -22,7 +22,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			"create_by INTEGER,thank_to TEXT,create_date TimeStamp NOT NULL DEFAULT (datetime('now','localtime')),"+
 			"last_update_date TimeStamp NOT NULL DEFAULT (datetime('now','localtime')),msg_type varchar(10));";
 	private static final String CREATE_THANKS_IMG = "create table "+TABLE_NAME_IMG+"(" +
-			"id INTEGER PRIMARY KEY AUTOINCREMENT,belong_to INTEGER,original_img blob,thumbnail blob," +
+			"id INTEGER PRIMARY KEY AUTOINCREMENT,belong_to INTEGER,original_img varchar(50),thumbnail varchar(50)," +
 			"enable_flag char(1),create_date TimeStamp NOT NULL DEFAULT (datetime('now','localtime')),"+
 			"last_update_date TimeStamp NOT NULL DEFAULT (datetime('now','localtime')));";
 	private static final String USER_TABLE_CREATE =
@@ -57,4 +57,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		this.onCreate(db);*/
 	}
 
+	@Override
+	public synchronized void close() {
+		super.close();
+	}
+
+	
+	
 }
