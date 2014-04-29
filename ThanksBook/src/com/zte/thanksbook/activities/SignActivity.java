@@ -142,6 +142,7 @@ public class SignActivity extends Activity implements WebDataProcessListener, Vi
 		String password = passwordText.getText().toString();
 		if (password.length() < 6 || password.length() > 14) {
 			passwordText.setError(this.getString(R.string.user_password_hint));
+			return;
 		}
 		String passwordEncryption = MD5Util.MD5Encode(password);
 
@@ -215,6 +216,7 @@ public class SignActivity extends Activity implements WebDataProcessListener, Vi
 		String password = passwordText.getText().toString();
 		if (password.length() < 6 || password.length() > 14) {
 			passwordText.setError(this.getString(R.string.user_password_hint));
+			return;
 		}
 		String passwordEncryption = MD5Util.MD5Encode(password);
 		

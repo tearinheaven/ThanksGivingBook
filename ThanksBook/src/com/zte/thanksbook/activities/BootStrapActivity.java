@@ -43,12 +43,11 @@ public class BootStrapActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_boot_strap);
-		this.getActionBar().hide();
 		isFirstUse = PreferenceUtil.getBooleanPre(this, PreferenceUtil.IS_FIRST_USE, true);
 		String userName = PreferenceUtil.getStringPre(this, PreferenceUtil.USER_NAME, null);
 		if(!isFirstUse)
 		{
-			Log.v("ThanksBook", userName);
+			Log.v("ThanksBook", "UserName:" + (userName==null ? "" : userName));
 		}
 		if(!isFirstUse && userName!=null)
 		{
